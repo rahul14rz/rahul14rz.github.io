@@ -12,7 +12,41 @@
 </head>
 <body>
   <main class="grid-container" id="bento-grid">
-    <section class="bento-card card-profile" id="card-profile"></section>
+    <section class="bento-card card-profile" id="card-profile">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span class="status-text">Available for remote mobile/fullstack projects</span>
+      </div>
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <svg viewBox="0 0 100 100" class="avatar-svg">
+            <defs>
+              <linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#8B5CF6" />
+                <stop offset="100%" stop-color="#3B82F6" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="48" fill="url(#avatar-grad)" />
+            <path d="M50 30 A12 12 0 1 0 50 54 A12 12 0 1 0 50 30 Z" fill="#ffffff" />
+            <path d="M22 78 C25 62, 75 62, 78 78 Z" fill="#ffffff" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="profile-name">Alex Rivera</h1>
+          <p class="profile-title">Fullstack Mobile Engineer</p>
+        </div>
+      </div>
+      <p class="profile-bio">
+        Crafting high-performance, pixel-perfect iOS & Android applications using <strong>Flutter</strong> and <strong>React Native</strong>, backed by robust <strong>Node.js</strong> architectures.
+      </p>
+      <div class="profile-tags">
+        <span class="tag">Flutter</span>
+        <span class="tag">React Native</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">TypeScript</span>
+      </div>
+    </section>
     <section class="bento-card card-projects" id="card-projects"></section>
     <section class="bento-card card-techstack" id="card-techstack"></section>
     <section class="bento-card card-socials" id="card-socials"></section>
