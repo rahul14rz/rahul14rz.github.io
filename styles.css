@@ -337,3 +337,68 @@ body {
     gap: 16px;
   }
 }
+
+/* Card D specific styles */
+.card-socials {
+  display: flex;
+  flex-direction: column;
+}
+
+.socials-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
+}
+
+.connect-btn {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid hsl(var(--border));
+  border-radius: 12px;
+  color: hsl(var(--text-primary));
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.main-connect {
+  width: 100%;
+  padding: 14px;
+}
+
+.main-connect:hover {
+  background-color: hsl(var(--text-primary));
+  color: hsl(var(--bg-primary));
+  border-color: hsl(var(--text-primary));
+}
+
+.social-links-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.square-btn {
+  flex: 1;
+  padding: 14px;
+}
+
+.square-btn:hover {
+  background-color: rgba(var(--accent-rgb), 0.08);
+  border-color: hsl(var(--accent));
+  color: hsl(var(--accent));
+}
+
+/* Clipboard success styling states */
+.connect-btn.success {
+  background-color: rgba(142, 230, 80, 0.08) !important;
+  border-color: hsl(var(--success)) !important;
+  color: hsl(var(--success)) !important;
+}
