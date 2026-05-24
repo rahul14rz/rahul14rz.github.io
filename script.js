@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Email Copy Handler
   const emailButton = document.getElementById('copy-email-btn');
   const btnText = document.getElementById('btn-text');
-  const professionalEmail = 'alex.rivera.dev@gmail.com'; // Change to actual developer email
+  const professionalEmail = 'rahulmanoharan0@gmail.com'; // Change to actual developer email
 
   if (emailButton) {
     emailButton.addEventListener('click', () => {
