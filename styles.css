@@ -204,3 +204,77 @@ body {
   70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(142, 230, 80, 0); }
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(142, 230, 80, 0); }
 }
+
+/* Card B specific styles */
+.card-projects {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid hsl(var(--border));
+  border-radius: 16px;
+  padding: 18px 24px;
+  transition: var(--transition-smooth);
+}
+
+.project-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: hsl(var(--accent));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+
+.project-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: hsl(var(--text-primary));
+  margin-bottom: 4px;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: hsl(var(--text-secondary));
+  line-height: 1.4;
+}
+
+.project-arrow {
+  color: hsl(var(--text-secondary));
+  transition: var(--transition-smooth);
+}
+
+/* Hover effects */
+.project-item:hover {
+  background-color: rgba(var(--accent-rgb), 0.04);
+  border-color: rgba(var(--accent-rgb), 0.3);
+  transform: translateX(4px);
+}
+
+.project-item:hover .project-arrow {
+  color: hsl(var(--text-primary));
+  transform: translateX(4px);
+}
