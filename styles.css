@@ -278,3 +278,62 @@ body {
   color: hsl(var(--text-primary));
   transform: translateX(4px);
 }
+
+/* Card C specific styles */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.category-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: hsl(var(--text-secondary));
+  margin-bottom: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-pill {
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--text-secondary));
+  font-weight: 500;
+  transition: var(--transition-smooth);
+  cursor: default;
+}
+
+/* Color thematic highlighting on hover */
+.skill-pill[data-category="mobile"]:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+  background-color: rgba(56, 189, 248, 0.08);
+}
+.skill-pill[data-category="frontend"]:hover {
+  border-color: #a78bfa;
+  color: #a78bfa;
+  background-color: rgba(167, 139, 250, 0.08);
+}
+.skill-pill[data-category="backend"]:hover {
+  border-color: #34d399;
+  color: #34d399;
+  background-color: rgba(52, 211, 153, 0.08);
+}
+
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
