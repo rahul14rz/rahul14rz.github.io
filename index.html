@@ -1,438 +1,547 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rahul M | Senior Fullstack Mobile Developer</title>
-  <meta name="description" content="Portfolio of Rahul M, Senior Software Engineer and Full Stack Mobile Team Lead. Over 5+ years of experience building scalable applications with Flutter, React Native, and Node.js.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rahul M Portfolio</title>
+<meta name="description" content="Rahul M is a full stack mobile developer at Adhoc Softwares, Coimbatore, building Flutter and React Native apps with the web panels and Node.js services behind them.">
+<meta property="og:title" content="Rahul M, full stack mobile developer">
+<meta property="og:description" content="Flutter, React Native, React and Node.js. Taxi booking, ERP and face-recognition attendance apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F4F7;
+  --surface:#FFFFFF;
+  --ink:#17202B;
+  --muted:#596574;
+  --line:#D6DCE4;
+  --cobalt:#1F5FD1;
+  --cobalt-soft:#E3ECFB;
+  --mint:#1E9E77;
+  --bezel:#17202B;
+  --map:#E8ECE6;
+  --road:#FFFFFF;
+  --water:#C9DCEF;
+  --park:#D5E6CF;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121821;--surface:#1A2230;--ink:#E8EDF3;--muted:#9AA6B5;--line:#2C3747;
+    --cobalt:#6E9CF2;--cobalt-soft:#1F2C44;--mint:#4CC79F;--bezel:#05080C;
+    --map:#1E2631;--road:#2E3947;--water:#1D3550;--park:#22362A;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121821;--surface:#1A2230;--ink:#E8EDF3;--muted:#9AA6B5;--line:#2C3747;
+  --cobalt:#6E9CF2;--cobalt-soft:#1F2C44;--mint:#4CC79F;--bezel:#05080C;
+  --map:#1E2631;--road:#2E3947;--water:#1D3550;--park:#22362A;color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;
+  font-optical-sizing:auto;font-size:1.0625rem;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-weight:700;font-size:1.125rem;text-decoration:none;letter-spacing:-.01em}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;color:var(--muted);font-size:.95rem}
+.nav ul a:hover{color:var(--ink)}
+@media (max-width:520px){.nav ul{gap:16px}.nav ul li.opt{display:none}}
+
+/* hero */
+.hero{padding:56px 0 88px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+.hero h1{
+  font-size:clamp(2.6rem,6.2vw,5rem);line-height:.98;letter-spacing:-.035em;
+  font-weight:750;font-variation-settings:"wdth" 82;margin:0 0 28px;max-width:11ch;
+}
+.hero .lede{font-size:1.2rem;line-height:1.55;color:var(--muted);max-width:34em;margin:0 0 32px}
+.hero .lede strong{color:var(--ink);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+  font:inherit;font-size:1rem;font-weight:600;text-decoration:none;cursor:pointer;border:1.5px solid var(--ink);
+  background:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn svg{width:18px;height:18px}
+@media (max-width:860px){
+  .hero{padding:32px 0 64px}
+  .hero .wrap{grid-template-columns:1fr;gap:48px}
+}
+
+/* phone */
+.device{display:flex;flex-direction:column;align-items:center;gap:20px}
+.phone{position:relative;width:300px;aspect-ratio:300/620;background:var(--bezel);border-radius:46px;padding:12px;
+  box-shadow:0 30px 60px -30px rgba(23,32,43,.45),0 0 0 1px rgba(255,255,255,.04) inset}
+.screen{position:relative;width:100%;height:100%;border-radius:35px;overflow:hidden;background:var(--surface)}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:84px;height:24px;border-radius:14px;background:var(--bezel);z-index:5}
+.status{position:absolute;top:0;left:0;right:0;height:44px;display:flex;justify-content:space-between;align-items:center;
+  padding:6px 24px 0;font-size:.78rem;font-weight:600;z-index:4;color:var(--ink)}
+.app{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s;display:flex;flex-direction:column}
+.app.on{opacity:1;visibility:visible;transition:opacity .35s ease}
+@media (max-width:360px){.phone{width:264px}}
+
+/* ride app */
+.ride .map{flex:1;position:relative;background:var(--map)}
+.ride .map svg{position:absolute;inset:0;width:100%;height:100%}
+.ride .route{stroke:var(--cobalt);stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:420;stroke-dashoffset:420}
+.ride.on .route{animation:draw 1.6s .2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.car{transform-box:fill-box;transform-origin:center}
+.sheet{background:var(--surface);border-radius:22px 22px 0 0;margin-top:-22px;position:relative;padding:12px 18px 20px;
+  box-shadow:0 -8px 24px -12px rgba(0,0,0,.25)}
+.grab{width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 12px}
+.sheet h4{margin:0;font-size:1.05rem;letter-spacing:-.01em}
+.sheet .sub{margin:2px 0 12px;color:var(--muted);font-size:.8rem}
+.driver{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:12px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--cobalt-soft);color:var(--cobalt);display:grid;place-items:center;font-weight:700;font-size:.8rem}
+.driver b{display:block;font-size:.85rem}
+.driver span{font-size:.75rem;color:var(--muted)}
+.driver .plate{margin-left:auto;font-size:.72rem;font-weight:700;border:1.5px solid var(--ink);border-radius:5px;padding:2px 6px;letter-spacing:.04em}
+.pill{display:block;text-align:center;background:var(--cobalt);color:var(--paper);border-radius:12px;padding:10px;font-weight:600;font-size:.88rem}
+
+/* erp app */
+.erp{padding:52px 16px 16px;background:var(--paper);gap:12px}
+.erp .top{display:flex;justify-content:space-between;align-items:baseline}
+.erp h4{margin:0;font-size:1.35rem;letter-spacing:-.02em}
+.erp .top span{font-size:.75rem;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{background:var(--surface);border-radius:14px;padding:10px 12px;border:1px solid var(--line)}
+.tile small{display:block;color:var(--muted);font-size:.7rem}
+.tile b{font-size:1.15rem;letter-spacing:-.01em}
+.tile i{display:block;font-style:normal;font-size:.68rem;color:var(--muted)}
+.chart{background:var(--surface);border-radius:14px;padding:12px;border:1px solid var(--line)}
+.chart small{color:var(--muted);font-size:.7rem}
+.bars{display:flex;align-items:flex-end;gap:7px;height:70px;margin-top:8px}
+.bars span{flex:1;background:var(--cobalt-soft);border-radius:4px 4px 2px 2px;height:var(--h);transform-origin:bottom}
+.bars span:last-child{background:var(--cobalt)}
+.erp.on .bars span{animation:grow .6s ease-out both}
+.erp.on .bars span:nth-child(2){animation-delay:.05s}.erp.on .bars span:nth-child(3){animation-delay:.1s}
+.erp.on .bars span:nth-child(4){animation-delay:.15s}.erp.on .bars span:nth-child(5){animation-delay:.2s}
+.erp.on .bars span:nth-child(6){animation-delay:.25s}.erp.on .bars span:nth-child(7){animation-delay:.3s}
+@keyframes grow{from{transform:scaleY(0)}}
+.days{display:flex;gap:7px;margin-top:4px}.days span{flex:1;text-align:center;font-size:.6rem;color:var(--muted)}
+.list{background:var(--surface);border-radius:14px;border:1px solid var(--line);font-size:.75rem}
+.list div{display:flex;justify-content:space-between;padding:8px 12px;border-top:1px solid var(--line)}
+.list div:first-child{border-top:0}
+.list em{font-style:normal;color:var(--muted)}
+
+/* face app */
+.face{background:#0E141C;color:#E8EDF3;align-items:center;padding:60px 20px 20px;text-align:center}
+.face .status{color:#E8EDF3}
+.face h4{margin:0 0 4px;font-size:1.05rem}
+.face .hint{margin:0;font-size:.78rem;color:#9AA6B5;min-height:2.4em}
+.scan{position:relative;width:200px;height:248px;margin:36px 0 0}
+.scan svg{width:100%;height:100%;overflow:visible}
+.ring{fill:none;stroke:#2C3747;stroke-width:4}
+.ring-live{fill:none;stroke:#6E9CF2;stroke-width:4;stroke-linecap:round;stroke-dasharray:640;stroke-dashoffset:640}
+.face.on .ring-live{animation:scan 2.4s .2s ease-in-out forwards}
+.face.done .ring-live{stroke:#4CC79F}
+@keyframes scan{to{stroke-dashoffset:0}}
+.mark{position:absolute;inset:auto 0 -6px;margin:auto;width:46px;height:46px;border-radius:50%;background:#4CC79F;
+  display:grid;place-items:center;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.6,1)}
+.face.done .mark{transform:scale(1)}
+.mark svg{width:24px;height:24px}
+.record{margin-top:auto;width:100%;background:#1A2230;border-radius:14px;padding:12px 14px;text-align:left;font-size:.78rem;display:flex;justify-content:space-between;opacity:.35;transition:opacity .3s}
+.face.done .record{opacity:1}
+.record b{display:block;font-size:.85rem}
+.record span{color:#9AA6B5}
+
+/* switcher */
+.switch{display:flex;gap:6px;padding:5px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.switch button{font:inherit;font-size:.85rem;font-weight:600;border:0;background:transparent;color:var(--muted);
+  padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.switch button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.device p{margin:0;font-size:.85rem;color:var(--muted);text-align:center;max-width:30ch}
+
+/* sections */
+section{padding:88px 0;border-top:1px solid var(--line)}
+@media (max-width:600px){section{padding:64px 0}}
+h2{font-size:clamp(2rem,4vw,2.9rem);line-height:1.05;letter-spacing:-.03em;font-weight:720;font-variation-settings:"wdth" 85;margin:0 0 12px}
+.intro{color:var(--muted);max-width:36em;margin:0 0 48px;font-size:1.1rem}
+
+/* timeline */
+.timeline{display:grid;gap:0}
+.entry{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;padding:32px 0;border-top:1px solid var(--line)}
+.entry:first-child{border-top:0;padding-top:0}
+.when{color:var(--muted);font-size:.95rem;font-variant-numeric:tabular-nums}
+.when b{display:block;color:var(--ink);font-weight:600}
+.entry h3{margin:0 0 2px;font-size:1.4rem;letter-spacing:-.015em}
+.entry .where{margin:0 0 16px;color:var(--muted)}
+.entry ul{margin:0;padding-left:1.1em;max-width:40em}
+.entry li{margin-bottom:8px}
+.entry li::marker{color:var(--cobalt)}
+@media (max-width:700px){.entry{grid-template-columns:1fr;gap:8px}}
+
+/* projects */
+.projects{display:grid;gap:20px}
+.project{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:40px;padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:24px}
+.project h3{margin:0 0 6px;font-size:clamp(1.6rem,3vw,2.1rem);letter-spacing:-.025em;line-height:1.1;font-variation-settings:"wdth" 88}
+.project .kind{margin:0 0 20px;color:var(--muted)}
+.project ul{margin:0 0 24px;padding-left:1.1em}
+.project li{margin-bottom:8px}
+.project li::marker{color:var(--cobalt)}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
+.stack li{font-size:.85rem;padding:4px 12px;border-radius:999px;background:var(--cobalt-soft);color:var(--cobalt);font-weight:600;margin:0}
+.peek{font:inherit;font-weight:600;font-size:.95rem;color:var(--cobalt);background:none;border:0;padding:0;cursor:pointer;
+  text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px}
+@media (max-width:760px){.project{grid-template-columns:1fr;gap:4px;padding:24px}}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
+.skills h3{font-size:1rem;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.skills ul{list-style:none;margin:0;padding:0}
+.skills li{padding:6px 0;border-bottom:1px solid var(--line)}
+@media (max-width:860px){.skills{grid-template-columns:1fr 1fr}}
+@media (max-width:340px){.skills{grid-template-columns:1fr}}
+
+/* recognition */
+.recog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.recog h3{margin:0 0 8px;font-size:1.2rem;letter-spacing:-.01em}
+.recog p{margin:0;color:var(--muted)}
+@media (max-width:760px){.recog{grid-template-columns:1fr;gap:24px}}
+
+/* contact */
+.contact .big{display:inline-block;font-size:clamp(1.5rem,5.4vw,3.6rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;
+  font-variation-settings:"wdth" 80;text-decoration:none;border-bottom:3px solid var(--cobalt);overflow-wrap:anywhere;margin:8px 0 32px}
+.contact .big:hover{color:var(--cobalt)}
+.links{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.toast{font-size:.9rem;color:var(--mint);font-weight:600;min-width:7em}
+footer{padding:32px 0 48px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}
+}
+</style>
 </head>
 <body>
 
-  <!-- ==================== NAVIGATION ==================== -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo" aria-label="Rahul M Home">
-        <span class="nav-logo-badge">RM</span>
-      </a>
-      
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
-      
-      <div class="nav-actions">
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle visual theme">
-          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-        <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="nav-links">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">Rahul M</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li class="opt"><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <!-- ==================== HERO SECTION ==================== -->
-  <header class="hero" id="hero">
-    <div class="hero-bg-glow" aria-hidden="true"></div>
-    <div class="hero-content">
-      <div class="monogram-badge" aria-hidden="true">
-        <span class="monogram-inner">RM</span>
+<main id="top">
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Mobile apps for taxis, factories and front desks.</h1>
+        <p class="lede">I'm <strong>Rahul M</strong>, a full stack mobile developer at Adhoc Softwares in Coimbatore. Since 2021 I've led a team building Flutter and React Native apps, along with the web panels and Node.js services behind them.</p>
+        <div class="actions">
+          <a class="btn" href="mailto:rahulmanoharan0@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email me
+          </a>
+          <a class="btn ghost" href="https://github.com/rahul14rz" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn ghost" href="https://linkedin.com/in/rahul14rz" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
       </div>
-      
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        <span class="status-text">Available for remote Senior Mobile / Fullstack roles</span>
-      </div>
-      
-      <h1 class="hero-name">Rahul M</h1>
-      <p class="hero-title">Senior Software Engineer &amp; Full Stack Mobile Team Lead</p>
-      
-      <p class="hero-tagline">
-        Engineering high-performance mobile architectures and pixel-perfect digital ecosystems. 
-        Specialized in <strong>Flutter</strong>, <strong>React Native</strong>, and <strong>Fullstack</strong> development.
-      </p>
-      
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">Explore Featured Projects</a>
-      </div>
-    </div>
-    
-    <div class="scroll-indicator" aria-hidden="true">
-      <div class="mouse">
-        <div class="wheel"></div>
-      </div>
-      <div class="arrow">
-        <span></span>
-        <span></span>
+
+      <div class="device" id="device">
+        <div class="phone" role="img" aria-label="Phone showing a sketch of the selected project">
+          <div class="screen">
+            <div class="notch"></div>
+
+            <!-- Book My Ride -->
+            <div class="app ride on" data-app="ride">
+              <div class="status"><span class="clock">9:41</span><span>5G</span></div>
+              <div class="map">
+                <svg viewBox="0 0 276 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                  <path d="M0 250 C60 230 90 280 150 268 S240 240 276 255 V400 H0Z" fill="var(--water)"/>
+                  <rect x="168" y="70" width="70" height="56" rx="10" fill="var(--park)"/>
+                  <g stroke="var(--road)" stroke-width="10" stroke-linecap="round" fill="none">
+                    <path d="M-10 110 H290"/><path d="M-10 190 H290"/>
+                    <path d="M60 -10 V240"/><path d="M140 -10 V260"/><path d="M220 40 V245"/>
+                    <path d="M20 320 L250 300" stroke-width="7"/>
+                  </g>
+                  <path class="route" d="M60 75 V110 H140 V190 H220 V230"/>
+                  <circle cx="60" cy="75" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="4"/>
+                  <g transform="translate(220 230)">
+                    <path d="M0 0 C-10 -14 -14 -20 -14 -27 a14 14 0 0 1 28 0 c0 7 -4 13 -14 27Z" fill="var(--ink)"/>
+                    <circle cy="-27" r="5" fill="var(--surface)"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="sheet">
+                <div class="grab"></div>
+                <h4>Driver arriving in 4 min</h4>
+                <p class="sub">Drottninggatan to Stockholm Central</p>
+                <div class="driver">
+                  <div class="avatar">EL</div>
+                  <div><b>Erik L.</b><span>Volvo XC60, white</span></div>
+                  <div class="plate">ABC 123</div>
+                </div>
+                <span class="pill">Share trip</span>
+              </div>
+            </div>
+
+            <!-- BusinessI ERP -->
+            <div class="app erp" data-app="erp">
+              <div class="status"><span class="clock">9:41</span><span>5G</span></div>
+              <div class="top"><h4 id="greet">Good morning</h4><span>Main plant</span></div>
+              <div class="tiles">
+                <div class="tile"><small>CRM</small><b>18</b><i>open leads</i></div>
+                <div class="tile"><small>HRMS</small><b>142</b><i>checked in</i></div>
+                <div class="tile"><small>Inventory</small><b>6</b><i>low stock items</i></div>
+                <div class="tile"><small>Manufacturing</small><b>3</b><i>jobs running</i></div>
+              </div>
+              <div class="chart">
+                <small>Units produced this week</small>
+                <div class="bars"><span style="--h:46%"></span><span style="--h:62%"></span><span style="--h:55%"></span><span style="--h:78%"></span><span style="--h:70%"></span><span style="--h:40%"></span><span style="--h:88%"></span></div>
+                <div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+              </div>
+              <div class="list">
+                <div><span>PO-2207 approved</span><em>2m</em></div>
+                <div><span>Leave request, Priya</span><em>18m</em></div>
+              </div>
+            </div>
+
+            <!-- Face attendance -->
+            <div class="app face" data-app="face">
+              <div class="status"><span class="clock">9:41</span><span>5G</span></div>
+              <h4>Check in</h4>
+              <p class="hint" id="faceHint">Hold still and blink once</p>
+              <div class="scan">
+                <svg viewBox="0 0 190 236" aria-hidden="true">
+                  <ellipse class="ring" cx="95" cy="118" rx="88" ry="110"/>
+                  <ellipse class="ring-live" cx="95" cy="118" rx="88" ry="110"/>
+                  <g fill="none" stroke="#5A6878" stroke-width="3" stroke-linecap="round">
+                    <ellipse cx="95" cy="110" rx="46" ry="58"/>
+                    <path d="M76 100 h8 M106 100 h8"/>
+                    <path d="M95 106 v16 l-5 3"/>
+                    <path d="M82 140 q13 9 26 0"/>
+                    <path d="M40 236 q10 -50 55 -58 q45 8 55 58"/>
+                  </g>
+                </svg>
+                <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#0E141C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
+              </div>
+              <div class="record">
+                <div><b>Marked present</b><span>Liveness confirmed</span></div>
+                <b class="clock">9:41</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="switch" role="group" aria-label="Choose a project to show on the phone">
+          <button type="button" data-show="ride" aria-pressed="true">Taxi</button>
+          <button type="button" data-show="erp" aria-pressed="false">ERP</button>
+          <button type="button" data-show="face" aria-pressed="false">Attendance</button>
+        </div>
+        <p id="caption">Book My Ride, a taxi app for Sweden</p>
       </div>
     </div>
   </header>
 
-  <!-- ==================== ABOUT SECTION ==================== -->
-  <section class="section" id="about">
-    <div class="section-container">
-      <div class="about-grid reveal">
-        <div class="about-text-content">
-          <h2 class="section-title-tag">01. Biography</h2>
-          <h3 class="section-main-title">About Me</h3>
-          <p class="about-p">
-            I am a Senior Software Engineer and Full Stack Mobile Team Lead with over <strong>5+ years of professional experience</strong>. I dedicate my skills to creating reliable, cross-platform mobile apps and solid backend architectures that boost user engagement and streamline complex operations.
-          </p>
-          <p class="about-p">
-            Currently at <strong>Adhoc Softwares</strong>, I lead multidisciplinary engineering squads to ship high-traffic, production-grade applications. I strive to achieve high-performance results by implementing scalable architectures, automating deployment streams, and driving rigorous code quality metrics.
-          </p>
-          <p class="about-p">
-            I approach engineering with a focus on maintainability, scalability, and robust security principles. Beyond code, I find purpose in coaching technical teams, simplifying operational workflows, and converting business requirements into flawless digital experiences.
-          </p>
-        </div>
-        
-        <div class="about-stats-aside">
-          <div class="stat-card">
-            <span class="stat-number">5+</span>
-            <span class="stat-label">Years Experience</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">30+</span>
-            <span class="stat-label">Apps Shipped</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">Team Lead</span>
-            <span class="stat-label">Coaching &amp; Delivery</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== EXPERIENCE SECTION ==================== -->
-  <section class="section" id="experience">
-    <div class="section-container">
-      <h2 class="section-title-tag reveal">02. Career Timeline</h2>
-      <h3 class="section-main-title reveal">Professional Experience</h3>
-      
+  <section id="work">
+    <div class="wrap">
+      <h2>Work and education</h2>
+      <p class="intro">Five years shipping client apps at one company, on top of an IT degree and research work.</p>
       <div class="timeline">
-        <div class="timeline-item reveal">
-          <div class="timeline-line" aria-hidden="true"></div>
-          <div class="timeline-marker" aria-hidden="true"></div>
-          
-          <div class="timeline-content-wrapper">
-            <div class="timeline-header">
-              <div class="role-company-box">
-                <h4 class="timeline-role">Full Stack &amp; Mobile Team Lead</h4>
-                <p class="timeline-company">Adhoc Softwares</p>
-              </div>
-              <span class="timeline-time">April 2021 — Present</span>
-            </div>
-            
-            <p class="timeline-location">Saravanampatti, Coimbatore, India</p>
-            
-            <ul class="timeline-details">
-              <li>Direct and coordinate a multi-disciplinary development team comprising software engineers, QA analysts, and interns, accelerating product delivery lifecycles by 25%.</li>
-              <li>Oversee end-to-end architecture and engineering for enterprise-grade mobile and web applications utilizing Flutter, React Native, Next.js, and Node.js.</li>
-              <li>Develop Native Android companion features using Java and Kotlin to leverage platform-specific background APIs.</li>
-              <li>Implement scalable backend workflows using Laravel and Node.js connected to optimized PostgreSQL instances.</li>
-              <li>Optimize cloud deployment memory footprints on Railway, reducing infrastructure hosting overhead by 30%.</li>
-              <li>Introduce clean integration testing patterns and CI/CD automation pipelines, reducing overall deployment time.</li>
-              <li>Design high-throughput, secure RESTful APIs to handle concurrent operations across taxi booking and attendance platforms.</li>
+        <article class="entry">
+          <div class="when"><b>Apr 2021 to now</b>Saravanampatti, Coimbatore</div>
+          <div>
+            <h3>Full Stack Mobile Developer</h3>
+            <p class="where">Adhoc Softwares</p>
+            <ul>
+              <li>Lead a team building Flutter applications, and set the coding practices that raised the team's output.</li>
+              <li>Run several client projects at once and deliver each one on time and to spec.</li>
+              <li>Train junior developers and interns, so the whole team gets stronger together.</li>
+              <li>Work with backend and design teams to integrate APIs and tune app performance.</li>
+              <li>Streamlined our development workflow, which shortened project delivery times.</li>
             </ul>
-            
-            <div class="timeline-tech-pills">
-              <span class="tech-pill">Flutter</span>
-              <span class="tech-pill">React Native</span>
-              <span class="tech-pill">Native Android</span>
-              <span class="tech-pill">Laravel</span>
-              <span class="tech-pill">Next.js</span>
-              <span class="tech-pill">Node.js</span>
-              <span class="tech-pill">PostgreSQL</span>
-              <span class="tech-pill">Railway</span>
-              <span class="tech-pill">AWS</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== PROJECTS SECTION ==================== -->
-  <section class="section" id="projects">
-    <div class="section-container">
-      <h2 class="section-title-tag reveal">03. Engineering Artifacts</h2>
-      <h3 class="section-main-title reveal">Featured Projects</h3>
-      
-      <div class="projects-grid">
-        
-        <!-- PROJECT 1 -->
-        <article class="project-card reveal">
-          <div class="project-visual-header ride-visual">
-            <div class="visual-accent-overlay"></div>
-            <svg class="project-visual-icon" viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="7" width="20" height="10" rx="2" ry="2"></rect>
-              <circle cx="7" cy="17" r="2"></circle>
-              <circle cx="17" cy="17" r="2"></circle>
-              <path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"></path>
-            </svg>
-            <span class="project-visual-tag">Production Live</span>
-          </div>
-          
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-category">Taxi Booking System</span>
-              <h4 class="project-title">Book My Ride (Sweden)</h4>
-            </div>
-            
-            <p class="project-description">
-              A high-concurrency cross-platform mobile ride-hailing and booking application built for the Swedish market. Features optimized live status telemetry and map route APIs.
-            </p>
-            
-            <ul class="project-highlights">
-              <li>Engineered intuitive client React Native features, increasing weekly booking retention.</li>
-              <li>Contributed to an administrative Next.js web portal securing multi-role access controls.</li>
-              <li>Optimized backend Express API throughput to manage peaks in booking traffic.</li>
-            </ul>
-            
-            <div class="project-tech-list">
-              <span class="project-tag">React Native</span>
-              <span class="project-tag">Next.js</span>
-              <span class="project-tag">Express.js</span>
-              <span class="project-tag">Node.js</span>
-            </div>
           </div>
         </article>
-
-        <!-- PROJECT 2 -->
-        <article class="project-card reveal">
-          <div class="project-visual-header erp-visual">
-            <div class="visual-accent-overlay"></div>
-            <svg class="project-visual-icon" viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-              <line x1="2" y1="10" x2="22" y2="10"></line>
-            </svg>
-            <span class="project-visual-tag">Enterprise</span>
-          </div>
-          
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-category">ERP &amp; Resource Management</span>
-              <h4 class="project-title">Businessi ERP</h4>
-            </div>
-            
-            <p class="project-description">
-              A multi-platform enterprise resource planning application serving HRMS, Finance, Inventory, and Manufacturing workflows. Synchronizes complex company dashboards.
-            </p>
-            
-            <ul class="project-highlights">
-              <li>Developed responsive desktop, web, and mobile layouts in a unified Flutter codebase.</li>
-              <li>Integrated role-based permission policies for multi-tier corporate organizations.</li>
-              <li>Designed localized state management workflows for reliable offline-first data handling.</li>
+        <article class="entry">
+          <div class="when"><b>2014 to 2018</b>Coimbatore</div>
+          <div>
+            <h3>B.Tech, Information Technology</h3>
+            <p class="where">Sri Krishna College of Technology</p>
+            <ul>
+              <li>Graduated with a CGPA of 8.73 out of 10.</li>
+              <li>Published research on image steganography and autonomous navigation.</li>
             </ul>
-            
-            <div class="project-tech-list">
-              <span class="project-tag">Flutter</span>
-              <span class="project-tag">Next.js</span>
-              <span class="project-tag">PostgreSQL</span>
-              <span class="project-tag">REST APIs</span>
-            </div>
           </div>
         </article>
+      </div>
+    </div>
+  </section>
 
-        <!-- PROJECT 3 -->
-        <article class="project-card reveal">
-          <div class="project-visual-header face-visual">
-            <div class="visual-accent-overlay"></div>
-            <svg class="project-visual-icon" viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7"></path>
-              <circle cx="9" cy="11" r="2"></circle>
-              <path d="M12 18a3 3 0 0 0-6 0"></path>
-              <path d="M16 16l2 2 4-4"></path>
-            </svg>
-            <span class="project-visual-tag">AI / Security</span>
+  <section id="projects">
+    <div class="wrap">
+      <h2>Selected projects</h2>
+      <p class="intro">Three apps from the last few years. Each one has a small sketch on the phone above.</p>
+      <div class="projects">
+        <article class="project">
+          <div>
+            <h3>Book My Ride</h3>
+            <p class="kind">Taxi booking app for Sweden</p>
           </div>
-          
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-category">Facial Recognition Telemetry</span>
-              <h4 class="project-title">Face Attendance System</h4>
-            </div>
-            
-            <p class="project-description">
-              A real-time facial recognition and automated attendance management platform built to prevent spoofing and streamline HR operations using advanced edge APIs.
-            </p>
-            
-            <ul class="project-highlights">
-              <li>Built custom edge-based liveness verification using Flutter &amp; mobile recognition SDKs.</li>
-              <li>Secured real-time, low-latency attendance ingestion pipelines targeting PostgreSQL.</li>
-              <li>Replaced manual enterprise data inputs, saving client HR operations hours of work.</li>
+          <div>
+            <ul>
+              <li>Building new features in the React Native rider and driver apps, and improving the booking experience.</li>
+              <li>Building the responsive website and the admin panel that operators use to run the service.</li>
+              <li>Tuning the Next.js backend for speed and scale.</li>
             </ul>
-            
-            <div class="project-tech-list">
-              <span class="project-tag">Flutter</span>
-              <span class="project-tag">ML Kit</span>
-              <span class="project-tag">PostgreSQL</span>
-              <span class="project-tag">Mobile SDK</span>
-            </div>
+            <ul class="stack" aria-label="Tech used"><li>React Native</li><li>Next.js</li><li>Node.js</li><li>React</li></ul>
+            <button class="peek" type="button" data-show="ride">See it on the phone</button>
           </div>
         </article>
-
+        <article class="project">
+          <div>
+            <h3>BusinessI ERP</h3>
+            <p class="kind">ERP software for growing companies</p>
+          </div>
+          <div>
+            <ul>
+              <li>Built web and mobile apps for the CRM, HRMS, inventory and manufacturing modules.</li>
+              <li>Built responsive dashboards, mobile screens and backend integrations for day-to-day company workflows.</li>
+              <li>Improved app performance while working in agile teams across design, backend and QA.</li>
+            </ul>
+            <ul class="stack" aria-label="Tech used"><li>Flutter</li><li>React</li><li>Node.js</li><li>PostgreSQL</li></ul>
+            <button class="peek" type="button" data-show="erp">See it on the phone</button>
+          </div>
+        </article>
+        <article class="project">
+          <div>
+            <h3>BusinessI Face Attendance</h3>
+            <p class="kind">Face recognition check-in</p>
+          </div>
+          <div>
+            <ul>
+              <li>Built a Flutter app that recognises employees' faces and marks their attendance automatically.</li>
+              <li>Added liveness detection so the app only accepts a real person, not a photo.</li>
+              <li>Cut errors in attendance records compared with manual tracking.</li>
+            </ul>
+            <ul class="stack" aria-label="Tech used"><li>Flutter</li><li>Dart</li><li>Liveness detection</li><li>REST APIs</li></ul>
+            <button class="peek" type="button" data-show="face">See it on the phone</button>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- ==================== SKILLS SECTION ==================== -->
-  <section class="section" id="skills">
-    <div class="section-container">
-      <h2 class="section-title-tag reveal">04. Capabilities</h2>
-      <h3 class="section-main-title reveal">Technical Ecosystem</h3>
-      
-      <div class="skills-wrapper reveal">
-        
-        <!-- CATEGORY: MOBILE -->
-        <div class="skills-card" data-category="mobile">
-          <div class="skills-card-header">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-              <line x1="12" y1="18" x2="12.01" y2="18"></line>
-            </svg>
-            <h5>Mobile Systems</h5>
-          </div>
-          <div class="skills-pill-group">
-            <span class="skill-pill">Flutter</span>
-            <span class="skill-pill">React Native</span>
-            <span class="skill-pill">Native Android</span>
-            <span class="skill-pill">Dart</span>
-            <span class="skill-pill">Kotlin</span>
-            <span class="skill-pill">Java</span>
-          </div>
-        </div>
-
-        <!-- CATEGORY: FRONTEND -->
-        <div class="skills-card" data-category="frontend">
-          <div class="skills-card-header">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polygon points="2 17 12 22 22 17"></polygon>
-              <polygon points="2 12 12 17 22 12"></polygon>
-            </svg>
-            <h5>Frontend Web</h5>
-          </div>
-          <div class="skills-pill-group">
-            <span class="skill-pill">React.js</span>
-            <span class="skill-pill">Next.js</span>
-            <span class="skill-pill">TypeScript</span>
-            <span class="skill-pill">JavaScript</span>
-            <span class="skill-pill">HTML5 &amp; CSS3</span>
-            <span class="skill-pill">Responsive Design</span>
-          </div>
-        </div>
-
-        <!-- CATEGORY: BACKEND -->
-        <div class="skills-card" data-category="backend">
-          <div class="skills-card-header">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-              <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
-            </svg>
-            <h5>Backend &amp; SQL</h5>
-          </div>
-          <div class="skills-pill-group">
-            <span class="skill-pill">Node.js</span>
-            <span class="skill-pill">Express.js</span>
-            <span class="skill-pill">Laravel</span>
-            <span class="skill-pill">Django</span>
-            <span class="skill-pill">PostgreSQL</span>
-            <span class="skill-pill">MySQL</span>
-            <span class="skill-pill">RESTful APIs</span>
-          </div>
-        </div>
-
-        <!-- CATEGORY: CLOUD & TOOLS -->
-        <div class="skills-card" data-category="cloud">
-          <div class="skills-card-header">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 10h-.08A7 7 0 0 0 4.75 9h-.08a4.5 4.5 0 0 0 0 9h13.3a5.5 5.5 0 0 0 0-11z"></path>
-            </svg>
-            <h5>Cloud &amp; DevOps</h5>
-          </div>
-          <div class="skills-pill-group">
-            <span class="skill-pill">AWS</span>
-            <span class="skill-pill">Railway</span>
-            <span class="skill-pill">Firebase</span>
-            <span class="skill-pill">Git &amp; GitHub</span>
-            <span class="skill-pill">CI/CD Pipelines</span>
-            <span class="skill-pill">Agile (Jira)</span>
-          </div>
-        </div>
-        
+  <section id="skills">
+    <div class="wrap">
+      <h2>What I work with</h2>
+      <p class="intro">Mobile first, with enough web and backend to ship a whole product.</p>
+      <div class="skills">
+        <div><h3>Mobile</h3><ul><li>Flutter</li><li>React Native</li><li>Dart</li><li>Kotlin</li><li>Java</li></ul></div>
+        <div><h3>Web</h3><ul><li>React</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li><li>HTML and CSS</li></ul></div>
+        <div><h3>Backend and data</h3><ul><li>Node.js</li><li>RESTful APIs</li><li>PostgreSQL</li><li>MySQL</li><li>Firebase</li></ul></div>
+        <div><h3>Tools and practice</h3><ul><li>AWS</li><li>Git</li><li>Jira</li><li>UI and UX design</li><li>Mentoring</li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== CONTACT SECTION ==================== -->
-  <section class="section contact-section" id="contact">
-    <div class="section-container">
-      <div class="contact-card reveal">
-        <h2 class="section-title-tag">05. Connection</h2>
-        <h3 class="contact-heading">Let's Design Together</h3>
-        
-        <p class="contact-lead">
-          I am currently open to remote mobile architecture, engineering lead, and fullstack opportunities. 
-          If you have an idea, a project, or simply want to chat, my inbox is always open.
-        </p>
-        
-        <div class="contact-cta-wrapper">
-          <a href="mailto:rahulmanoharan0@gmail.com" class="btn btn-primary btn-large">
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" style="margin-right: 10px; vertical-align: middle;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            rahulmanoharan0@gmail.com
-          </a>
-          
-          <button class="btn btn-outline" id="copy-email-btn">
-            <span id="copy-btn-text">Copy Email Address</span>
-            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" style="margin-left: 8px; vertical-align: middle;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          </button>
-        </div>
-        
-        <div class="contact-social-row">
-          <a href="https://github.com/rahul14rz" target="_blank" rel="noopener" class="social-pill" title="Follow me on GitHub">
-            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-            <span>GitHub</span>
-          </a>
-          
-          <a href="https://linkedin.com/in/rahul14rz" target="_blank" rel="noopener" class="social-pill" title="Connect on LinkedIn">
-            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-            <span>LinkedIn</span>
-          </a>
-        </div>
+  <section id="recognition">
+    <div class="wrap">
+      <h2>Research and certificates</h2>
+      <p class="intro">Outside client work.</p>
+      <div class="recog">
+        <div><h3>Published research</h3><p>Papers on image steganography and autonomous navigation, published in IEEE and international journals.</p></div>
+        <div><h3>NPTEL courses</h3><p>Mobile Computing and Internetwork Security, certified by IIT Madras and IIT Kharagpur.</p></div>
+        <div><h3>Cambridge BEC Preliminary</h3><p>Business English Certificate with merit, at European level B1, from the University of Cambridge.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <p class="footer-copy">© 2026 Rahul M. All rights reserved.</p>
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Have an app in mind?</h2>
+      <p class="intro">I'm happy to talk about mobile projects, team roles or freelance work.</p>
+      <a class="big" href="mailto:rahulmanoharan0@gmail.com">rahulmanoharan0@gmail.com</a>
+      <div class="links">
+        <button class="btn" type="button" id="copy">Copy email</button>
+        <a class="btn ghost" href="https://github.com/rahul14rz" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn ghost" href="https://linkedin.com/in/rahul14rz" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn ghost" href="https://linktr.ee/rahul14rz" target="_blank" rel="noopener">All links</a>
+        <span class="toast" id="toast" role="status" aria-live="polite"></span>
+      </div>
     </div>
-  </footer>
+  </section>
+</main>
 
-  <script src="script.js"></script>
+<footer>
+  <div class="wrap"><span>&copy; <span id="year">2026</span> Rahul M</span><span>Coimbatore, India</span></div>
+</footer>
+
+<script>
+(function(){
+  var captions={ride:"Book My Ride, a taxi app for Sweden",erp:"BusinessI ERP, the home screen",face:"BusinessI Face Attendance, checking in"};
+  var apps=document.querySelectorAll('.app');
+  var buttons=document.querySelectorAll('.switch button');
+  var caption=document.getElementById('caption');
+  var faceApp=document.querySelector('.face');
+  var hint=document.getElementById('faceHint');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timer;
+
+  function now(){var d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
+  document.querySelectorAll('.clock').forEach(function(c){c.textContent=now();});
+  document.getElementById('year').textContent=new Date().getFullYear();
+  var hr=new Date().getHours();document.getElementById('greet').textContent=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
+
+  function show(id){
+    clearTimeout(timer);
+    apps.forEach(function(a){
+      var on=a.dataset.app===id;
+      a.classList.remove('on','done');
+      if(on){void a.offsetWidth;a.classList.add('on');}
+    });
+    buttons.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.show===id?'true':'false');});
+    caption.textContent=captions[id];
+    if(id==='face'){
+      hint.textContent='Hold still and blink once';
+      timer=setTimeout(function(){faceApp.classList.add('done');hint.textContent='Welcome back, you are checked in';},reduce?0:2700);
+    }
+  }
+  buttons.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.show);});});
+  document.querySelectorAll('.peek').forEach(function(b){
+    b.addEventListener('click',function(){
+      show(b.dataset.show);
+      document.getElementById('device').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    });
+  });
+
+  var nav=document.getElementById('nav');
+  addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>8);},{passive:true});
+
+  var toast=document.getElementById('toast');
+  document.getElementById('copy').addEventListener('click',function(){
+    var email='rahulmanoharan0@gmail.com';
+    function done(msg){toast.textContent=msg;setTimeout(function(){toast.textContent='';},2500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(email).then(function(){done('Email copied');},function(){done('Select the address above to copy it');});
+    }else{done('Select the address above to copy it');}
+  });
+})();
+</script>
 </body>
 </html>
