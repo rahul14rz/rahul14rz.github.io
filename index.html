@@ -297,6 +297,22 @@ h2{font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.04;letter-spacing:-.04em;f
 .peek:hover svg{transform:translateY(-4px)}
 @media (max-width:760px){.project{grid-template-columns:1fr;gap:4px;padding:26px}}
 
+.stores{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
+.store{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);
+  text-decoration:none;font-weight:600;font-size:.92rem;transition:border-color .2s,transform .25s var(--ease),color .2s}
+.store:hover{border-color:var(--cobalt);color:var(--cobalt);transform:translateY(-2px)}
+.store svg{width:15px;height:15px}
+.more{margin-top:64px}
+.more h3{margin:0 0 16px;font-size:1.5rem;letter-spacing:-.025em;font-weight:650}
+.apps{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.apps li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 24px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
+.apps b{font-size:1.15rem;font-weight:650;letter-spacing:-.01em}
+.apps span{display:block;color:var(--muted)}
+.go{display:flex;gap:20px}
+.go a{color:var(--cobalt);font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px;white-space:nowrap}
+.go a:hover{text-decoration-thickness:3px}
+@media (max-width:600px){.apps li{grid-template-columns:1fr}}
+
 /* skills */
 .skills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
 .skills h3{font-size:1.05rem;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid var(--ink);font-weight:650}
@@ -542,6 +558,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
               <li>Tuning the Next.js backend for speed and scale.</li>
             </ul>
             <ul class="stack" aria-label="Tech used"><li>React Native</li><li>Next.js</li><li>Node.js</li><li>React</li></ul>
+            <div class="stores"><a class="store" href="https://apps.apple.com/app/id1582224541" target="_blank" rel="noopener" aria-label="Book My Ride rider app on the App Store">App Store<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="store" href="https://apps.apple.com/app/id6448467192" target="_blank" rel="noopener" aria-label="Book My Ride driver app on the App Store">Driver app<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="store" href="https://play.google.com/store/apps/dev?id=8188585043237970854" target="_blank" rel="noopener" aria-label="Book My Ride apps on Google Play">Google Play<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="store" href="https://bookmyride.se" target="_blank" rel="noopener" aria-label="Book My Ride website">bookmyride.se<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
             <button class="peek" type="button" data-show="ride">See it on the phone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </div>
         </article>
@@ -558,6 +575,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
               <li>Improved app performance while working in agile teams across design, backend and QA.</li>
             </ul>
             <ul class="stack" aria-label="Tech used"><li>Flutter</li><li>React</li><li>Node.js</li><li>PostgreSQL</li></ul>
+            <div class="stores"><a class="store" href="https://play.google.com/store/apps/details?id=com.adhoc.businessi" target="_blank" rel="noopener" aria-label="BusinessI ERP on Google Play">Google Play<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="store" href="https://apps.apple.com/app/id6469127050" target="_blank" rel="noopener" aria-label="BusinessI ERP on the App Store">App Store<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
             <button class="peek" type="button" data-show="erp">See it on the phone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </div>
         </article>
@@ -574,9 +592,19 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
               <li>Cut errors in attendance records compared with manual tracking.</li>
             </ul>
             <ul class="stack" aria-label="Tech used"><li>Flutter</li><li>Dart</li><li>Liveness detection</li><li>REST APIs</li></ul>
+            <div class="stores"><a class="store" href="https://play.google.com/store/apps/details?id=com.businessi.faceattendance" target="_blank" rel="noopener" aria-label="BusinessI Face Attendance on Google Play">Google Play<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="store" href="https://apps.apple.com/app/id6773296937" target="_blank" rel="noopener" aria-label="BusinessI Face Attendance on the App Store">App Store<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
             <button class="peek" type="button" data-show="face">See it on the phone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </div>
         </article>
+      </div>
+      <div class="more reveal">
+        <h3>More apps I've shipped</h3>
+        <ul class="apps">
+          <li><div><b>MyFoodApp</b><span>Food delivery, with customer and vendor apps</span></div><div class="go"><a href="https://play.google.com/store/apps/details?id=com.foodbite.app" target="_blank" rel="noopener">Google Play</a><a href="https://apps.apple.com/app/id6799832600" target="_blank" rel="noopener">App Store</a></div></li>
+          <li><div><b>BusinessI Real Estate CRM</b><span>Lead and sales tracking for real estate teams</span></div><div class="go"><a href="https://play.google.com/store/apps/details?id=com.businessi.real360" target="_blank" rel="noopener">Google Play</a><a href="https://apps.apple.com/app/id6773232769" target="_blank" rel="noopener">App Store</a></div></li>
+          <li><div><b>RideApp</b><span>Delivery and home services, with apps for customers, vendors and service staff</span></div><div class="go"><a href="https://play.google.com/store/apps/developer?id=Widelens" target="_blank" rel="noopener">Google Play</a></div></li>
+          <li><div><b>Click Your Order</b><span>Online ordering app</span></div><div class="go"><a href="https://play.google.com/store/apps/details?id=com.globalcreators.clickyourorder" target="_blank" rel="noopener">Google Play</a></div></li>
+        </ul>
       </div>
     </div>
   </section>
