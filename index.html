@@ -9,7 +9,8 @@
 <meta property="og:description" content="Flutter, React Native, React and Node.js. Taxi booking, ERP and face-recognition attendance apps.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..800&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
 <style>
 :root{
   --paper:#F2F4F7;
@@ -19,24 +20,26 @@
   --line:#D6DCE4;
   --cobalt:#1F5FD1;
   --cobalt-soft:#E3ECFB;
+  --sky:#7FB2FF;
   --mint:#1E9E77;
   --bezel:#17202B;
   --map:#E8ECE6;
   --road:#FFFFFF;
   --water:#C9DCEF;
   --park:#D5E6CF;
+  --ease:cubic-bezier(.2,.8,.2,1);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#121821;--surface:#1A2230;--ink:#E8EDF3;--muted:#9AA6B5;--line:#2C3747;
-    --cobalt:#6E9CF2;--cobalt-soft:#1F2C44;--mint:#4CC79F;--bezel:#05080C;
+    --cobalt:#6E9CF2;--cobalt-soft:#1F2C44;--sky:#3B6FD0;--mint:#4CC79F;--bezel:#05080C;
     --map:#1E2631;--road:#2E3947;--water:#1D3550;--park:#22362A;color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --paper:#121821;--surface:#1A2230;--ink:#E8EDF3;--muted:#9AA6B5;--line:#2C3747;
-  --cobalt:#6E9CF2;--cobalt-soft:#1F2C44;--mint:#4CC79F;--bezel:#05080C;
+  --cobalt:#6E9CF2;--cobalt-soft:#1F2C44;--sky:#3B6FD0;--mint:#4CC79F;--bezel:#05080C;
   --map:#1E2631;--road:#2E3947;--water:#1D3550;--park:#22362A;color-scheme:dark;
 }
 
@@ -44,192 +47,288 @@
 html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--paper);color:var(--ink);
-  font-family:"Bricolage Grotesque",system-ui,sans-serif;
-  font-optical-sizing:auto;font-size:1.0625rem;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  font-family:"Outfit",system-ui,sans-serif;font-size:1.0625rem;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 a{color:inherit}
 :focus-visible{outline:2px solid var(--cobalt);outline-offset:3px;border-radius:4px}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 @media (max-width:600px){.wrap{padding:0 16px}}
 
-/* nav */
-.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+/* ---------- word reveal ---------- */
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.w>span{display:inline-block}
+.js .split .w>span{transform:translateY(110%);transition:transform .9s var(--ease);transition-delay:var(--d,0s)}
+.js .split.in .w>span{transform:none}
+
+/* ---------- scroll reveal ---------- */
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 86%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
 .nav.scrolled{border-bottom-color:var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-weight:700;font-size:1.125rem;text-decoration:none;letter-spacing:-.01em}
+.brand{font-weight:700;font-size:1.2rem;text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.brand i{width:10px;height:10px;border-radius:3px;background:var(--cobalt);display:inline-block;transition:transform .6s var(--ease)}
+.brand:hover i{transform:rotate(225deg) scale(1.2)}
 .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
-.nav ul a{text-decoration:none;color:var(--muted);font-size:.95rem}
-.nav ul a:hover{color:var(--ink)}
+.nav ul a{text-decoration:none;color:var(--muted);font-size:.98rem;position:relative;padding:4px 0}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--cobalt);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
+.nav ul a:hover,.nav ul a.here{color:var(--ink)}
+.nav ul a:hover::after,.nav ul a.here::after{transform:scaleX(1);transform-origin:left}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--cobalt);transform-origin:left;transform:scaleX(0)}
 @media (max-width:520px){.nav ul{gap:16px}.nav ul li.opt{display:none}}
 
-/* hero */
-.hero{padding:56px 0 88px}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
-.hero h1{
-  font-size:clamp(2.6rem,6.2vw,5rem);line-height:.98;letter-spacing:-.035em;
-  font-weight:750;font-variation-settings:"wdth" 82;margin:0 0 28px;max-width:11ch;
-}
-.hero .lede{font-size:1.2rem;line-height:1.55;color:var(--muted);max-width:34em;margin:0 0 32px}
+/* ---------- hero ---------- */
+.hero{position:relative;padding:48px 0 96px;overflow:hidden}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+.backdrop{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.backdrop::before{content:"";position:absolute;inset:0;
+  background-image:radial-gradient(var(--line) 1.2px,transparent 1.2px);background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(ellipse 60% 70% at 72% 45%,#000 20%,transparent 75%);
+  mask-image:radial-gradient(ellipse 60% 70% at 72% 45%,#000 20%,transparent 75%)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55}
+.blob.a{width:420px;height:420px;background:var(--sky);right:4%;top:6%;animation:drift 16s ease-in-out infinite alternate}
+.blob.b{width:300px;height:300px;background:var(--mint);right:26%;top:48%;opacity:.28;animation:drift 20s ease-in-out infinite alternate-reverse}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,30px) scale(1.1)}100%{transform:translate(30px,-40px) scale(.95)}}
+
+.open{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 10px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);font-size:.92rem;font-weight:500;margin-bottom:28px}
+.dot{position:relative;width:9px;height:9px;border-radius:50%;background:var(--mint)}
+.dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--mint);animation:ping 2s ease-out infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(3);opacity:0}}
+
+.hero h1{font-size:clamp(2.8rem,6.6vw,5.5rem);line-height:1;letter-spacing:-.045em;font-weight:700;margin:0 0 28px;max-width:11ch}
+.hero .lede{font-size:1.22rem;line-height:1.55;color:var(--muted);max-width:33em;margin:0 0 32px;font-weight:350}
 .hero .lede strong{color:var(--ink);font-weight:600}
 .actions{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+.btn{position:relative;display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;
   font:inherit;font-size:1rem;font-weight:600;text-decoration:none;cursor:pointer;border:1.5px solid var(--ink);
-  background:var(--ink);color:var(--paper)}
+  background:var(--ink);color:var(--paper);overflow:hidden;isolation:isolate;transition:transform .25s var(--ease),border-color .2s,color .25s}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--cobalt);transform:translateY(101%);transition:transform .4s var(--ease)}
+.btn:hover::before{transform:none}
+.btn:hover{border-color:var(--cobalt);color:#fff}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
-.btn.ghost:hover{border-color:var(--ink)}
 .btn svg{width:18px;height:18px}
+.facts{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);max-width:34em}
+.facts div{font-size:.95rem;color:var(--muted);line-height:1.3}
+.facts b{display:block;font-size:1.7rem;color:var(--ink);font-weight:650;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+
+.js .hero .fade{opacity:0;transform:translateY(20px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d)}
+.js .hero.ready .fade{opacity:1;transform:none}
 @media (max-width:860px){
-  .hero{padding:32px 0 64px}
-  .hero .wrap{grid-template-columns:1fr;gap:48px}
+  .hero{padding:28px 0 72px}
+  .hero .wrap{grid-template-columns:1fr;gap:56px}
+  .blob.a{width:300px;height:300px;top:52%;right:-10%}
+  .blob.b{display:none}
+  .backdrop::before{-webkit-mask-image:radial-gradient(ellipse 80% 40% at 50% 75%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 80% 40% at 50% 75%,#000 20%,transparent 75%)}
 }
 
-/* phone */
-.device{display:flex;flex-direction:column;align-items:center;gap:20px}
+/* ---------- phone ---------- */
+.device{display:flex;flex-direction:column;align-items:center;gap:22px;perspective:1200px}
+.stage{position:relative}
+.js .stage{opacity:0;transform:translateY(60px) rotate(-8deg) scale(.92);transition:opacity 1.1s var(--ease) .35s,transform 1.3s var(--ease) .35s}
+.js .hero.ready .stage{opacity:1;transform:none}
+.tilt{position:relative;transition:transform .5s var(--ease)}
+.tilt .phone{z-index:1}
 .phone{position:relative;width:300px;aspect-ratio:300/620;background:var(--bezel);border-radius:46px;padding:12px;
-  box-shadow:0 30px 60px -30px rgba(23,32,43,.45),0 0 0 1px rgba(255,255,255,.04) inset}
+  box-shadow:0 40px 80px -30px rgba(23,32,43,.5),0 0 0 1px rgba(255,255,255,.05) inset;animation:bob 6s ease-in-out infinite}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}
 .screen{position:relative;width:100%;height:100%;border-radius:35px;overflow:hidden;background:var(--surface)}
 .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:84px;height:24px;border-radius:14px;background:var(--bezel);z-index:5}
 .status{position:absolute;top:0;left:0;right:0;height:44px;display:flex;justify-content:space-between;align-items:center;
   padding:6px 24px 0;font-size:.78rem;font-weight:600;z-index:4;color:var(--ink)}
-.app{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s;display:flex;flex-direction:column}
-.app.on{opacity:1;visibility:visible;transition:opacity .35s ease}
+.app{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(30px) scale(.98);
+  transition:opacity .45s ease,transform .6s var(--ease),visibility 0s .6s}
+.app.out{transform:translateX(-30px) scale(.98)}
+.app.on{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease,transform .6s var(--ease)}
+.chip{position:absolute;z-index:4;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);font-size:.85rem;font-weight:600;box-shadow:0 12px 30px -14px rgba(23,32,43,.35);white-space:nowrap;
+  animation:bob 5s ease-in-out infinite;transition:transform .5s var(--ease)}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.chip.c1{top:14%;left:-74px;--c:var(--cobalt);animation-delay:-1s}
+.chip.c2{top:46%;right:-80px;--c:var(--mint);animation-delay:-2.5s}
+.chip.c3{bottom:12%;left:-58px;--c:#E2A93B;animation-delay:-4s}
+@media (max-width:420px){.btn{padding:12px 18px}}
+@media (max-width:440px){.chip.c1{left:-18px}.chip.c2{right:-22px}.chip.c3{left:-14px}}
 @media (max-width:360px){.phone{width:264px}}
 
-/* ride app */
+/* ride */
 .ride .map{flex:1;position:relative;background:var(--map)}
 .ride .map svg{position:absolute;inset:0;width:100%;height:100%}
-.ride .route{stroke:var(--cobalt);stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;
-  stroke-dasharray:420;stroke-dashoffset:420}
-.ride.on .route{animation:draw 1.6s .2s ease-out forwards}
+.route{stroke:var(--cobalt);stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420}
+.ride.on .route{animation:draw 1.8s .2s linear forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
-.car{transform-box:fill-box;transform-origin:center}
+.car{opacity:0;transition:opacity .2s}
+.pin{transform-box:fill-box;transform-origin:bottom center;transform:scale(0)}
+.ride.on .pin{animation:pop .5s 1.9s cubic-bezier(.3,1.6,.6,1) forwards}
+@keyframes pop{to{transform:scale(1)}}
 .sheet{background:var(--surface);border-radius:22px 22px 0 0;margin-top:-22px;position:relative;padding:12px 18px 20px;
-  box-shadow:0 -8px 24px -12px rgba(0,0,0,.25)}
+  box-shadow:0 -8px 24px -12px rgba(0,0,0,.25);transform:translateY(100%);transition:transform .7s var(--ease)}
+.ride.on .sheet{transform:none;transition-delay:.5s}
 .grab{width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 12px}
-.sheet h4{margin:0;font-size:1.05rem;letter-spacing:-.01em}
+.sheet h4{margin:0;font-size:1.08rem;letter-spacing:-.01em;font-weight:600}
 .sheet .sub{margin:2px 0 12px;color:var(--muted);font-size:.8rem}
 .driver{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:12px}
 .avatar{width:34px;height:34px;border-radius:50%;background:var(--cobalt-soft);color:var(--cobalt);display:grid;place-items:center;font-weight:700;font-size:.8rem}
-.driver b{display:block;font-size:.85rem}
+.driver b{display:block;font-size:.88rem;font-weight:600}
 .driver span{font-size:.75rem;color:var(--muted)}
-.driver .plate{margin-left:auto;font-size:.72rem;font-weight:700;border:1.5px solid var(--ink);border-radius:5px;padding:2px 6px;letter-spacing:.04em}
-.pill{display:block;text-align:center;background:var(--cobalt);color:var(--paper);border-radius:12px;padding:10px;font-weight:600;font-size:.88rem}
+.plate{margin-left:auto;font-size:.72rem;font-weight:700;border:1.5px solid var(--ink);border-radius:5px;padding:2px 6px;letter-spacing:.04em}
+.pill{display:block;text-align:center;background:var(--cobalt);color:var(--paper);border-radius:12px;padding:10px;font-weight:600;font-size:.9rem}
 
-/* erp app */
+/* erp */
 .erp{padding:52px 16px 16px;background:var(--paper);gap:12px}
 .erp .top{display:flex;justify-content:space-between;align-items:baseline}
-.erp h4{margin:0;font-size:1.35rem;letter-spacing:-.02em}
+.erp h4{margin:0;font-size:1.4rem;letter-spacing:-.03em;font-weight:650}
 .erp .top span{font-size:.75rem;color:var(--muted)}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.tile{background:var(--surface);border-radius:14px;padding:10px 12px;border:1px solid var(--line)}
+.tile{background:var(--surface);border-radius:14px;padding:10px 12px;border:1px solid var(--line);opacity:0;transform:translateY(12px)}
+.erp.on .tile{animation:rise .5s var(--ease) forwards}
+.erp.on .tile:nth-child(2){animation-delay:.08s}.erp.on .tile:nth-child(3){animation-delay:.16s}.erp.on .tile:nth-child(4){animation-delay:.24s}
+@keyframes rise{to{opacity:1;transform:none}}
 .tile small{display:block;color:var(--muted);font-size:.7rem}
-.tile b{font-size:1.15rem;letter-spacing:-.01em}
+.tile b{font-size:1.2rem;letter-spacing:-.02em;font-weight:650;font-variant-numeric:tabular-nums}
 .tile i{display:block;font-style:normal;font-size:.68rem;color:var(--muted)}
 .chart{background:var(--surface);border-radius:14px;padding:12px;border:1px solid var(--line)}
 .chart small{color:var(--muted);font-size:.7rem}
 .bars{display:flex;align-items:flex-end;gap:7px;height:70px;margin-top:8px}
-.bars span{flex:1;background:var(--cobalt-soft);border-radius:4px 4px 2px 2px;height:var(--h);transform-origin:bottom}
+.bars span{flex:1;background:var(--cobalt-soft);border-radius:4px 4px 2px 2px;height:var(--h);transform-origin:bottom;transform:scaleY(0)}
 .bars span:last-child{background:var(--cobalt)}
-.erp.on .bars span{animation:grow .6s ease-out both}
-.erp.on .bars span:nth-child(2){animation-delay:.05s}.erp.on .bars span:nth-child(3){animation-delay:.1s}
-.erp.on .bars span:nth-child(4){animation-delay:.15s}.erp.on .bars span:nth-child(5){animation-delay:.2s}
-.erp.on .bars span:nth-child(6){animation-delay:.25s}.erp.on .bars span:nth-child(7){animation-delay:.3s}
-@keyframes grow{from{transform:scaleY(0)}}
+.erp.on .bars span{animation:grow .7s var(--ease) forwards;animation-delay:calc(.3s + var(--i) * .06s)}
+@keyframes grow{to{transform:scaleY(1)}}
 .days{display:flex;gap:7px;margin-top:4px}.days span{flex:1;text-align:center;font-size:.6rem;color:var(--muted)}
-.list{background:var(--surface);border-radius:14px;border:1px solid var(--line);font-size:.75rem}
+.list{background:var(--surface);border-radius:14px;border:1px solid var(--line);font-size:.76rem}
 .list div{display:flex;justify-content:space-between;padding:8px 12px;border-top:1px solid var(--line)}
 .list div:first-child{border-top:0}
 .list em{font-style:normal;color:var(--muted)}
 
-/* face app */
+/* face */
 .face{background:#0E141C;color:#E8EDF3;align-items:center;padding:60px 20px 20px;text-align:center}
 .face .status{color:#E8EDF3}
-.face h4{margin:0 0 4px;font-size:1.05rem}
-.face .hint{margin:0;font-size:.78rem;color:#9AA6B5;min-height:2.4em}
+.face h4{margin:0 0 4px;font-size:1.1rem;font-weight:600}
+.face .hint{margin:0;font-size:.8rem;color:#9AA6B5;min-height:2.4em}
 .scan{position:relative;width:200px;height:248px;margin:36px 0 0}
 .scan svg{width:100%;height:100%;overflow:visible}
 .ring{fill:none;stroke:#2C3747;stroke-width:4}
 .ring-live{fill:none;stroke:#6E9CF2;stroke-width:4;stroke-linecap:round;stroke-dasharray:640;stroke-dashoffset:640}
 .face.on .ring-live{animation:scan 2.4s .2s ease-in-out forwards}
-.face.done .ring-live{stroke:#4CC79F}
+.face.done .ring-live{stroke:#4CC79F;transition:stroke .3s}
 @keyframes scan{to{stroke-dashoffset:0}}
+.sweep{opacity:0}
+.face.on:not(.done) .sweep{opacity:1;animation:sweep 1.2s ease-in-out infinite alternate}
+@keyframes sweep{from{transform:translateY(0)}to{transform:translateY(200px)}}
 .mark{position:absolute;inset:auto 0 -6px;margin:auto;width:46px;height:46px;border-radius:50%;background:#4CC79F;
-  display:grid;place-items:center;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.6,1)}
+  display:grid;place-items:center;transform:scale(0);transition:transform .45s cubic-bezier(.3,1.6,.6,1)}
 .face.done .mark{transform:scale(1)}
 .mark svg{width:24px;height:24px}
-.record{margin-top:auto;width:100%;background:#1A2230;border-radius:14px;padding:12px 14px;text-align:left;font-size:.78rem;display:flex;justify-content:space-between;opacity:.35;transition:opacity .3s}
-.face.done .record{opacity:1}
-.record b{display:block;font-size:.85rem}
+.record{margin-top:auto;width:100%;background:#1A2230;border-radius:14px;padding:12px 14px;text-align:left;font-size:.78rem;
+  display:flex;justify-content:space-between;opacity:0;transform:translateY(16px);transition:opacity .4s,transform .5s var(--ease)}
+.face.done .record{opacity:1;transform:none}
+.record b{display:block;font-size:.88rem;font-weight:600}
 .record span{color:#9AA6B5}
 
 /* switcher */
 .switch{display:flex;gap:6px;padding:5px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
-.switch button{font:inherit;font-size:.85rem;font-weight:600;border:0;background:transparent;color:var(--muted);
-  padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.switch button{position:relative;overflow:hidden;font:inherit;font-size:.9rem;font-weight:600;border:0;background:transparent;color:var(--muted);
+  padding:8px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .3s,color .3s}
 .switch button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.device p{margin:0;font-size:.85rem;color:var(--muted);text-align:center;max-width:30ch}
+.switch.auto button[aria-pressed="true"]::after{content:"";position:absolute;left:14px;right:14px;bottom:4px;height:2px;border-radius:2px;
+  background:var(--paper);opacity:.6;transform-origin:left;animation:prog var(--dur,5s) linear forwards}
+@keyframes prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.device p{margin:0;font-size:.9rem;color:var(--muted);text-align:center;max-width:30ch;min-height:1.5em}
 
-/* sections */
-section{padding:88px 0;border-top:1px solid var(--line)}
-@media (max-width:600px){section{padding:64px 0}}
-h2{font-size:clamp(2rem,4vw,2.9rem);line-height:1.05;letter-spacing:-.03em;font-weight:720;font-variation-settings:"wdth" 85;margin:0 0 12px}
-.intro{color:var(--muted);max-width:36em;margin:0 0 48px;font-size:1.1rem}
+/* ---------- marquee ---------- */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:22px 0;background:var(--surface)}
+.track{display:flex;width:max-content;animation:slide 38s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.track ul{display:flex;align-items:center;list-style:none;margin:0;padding:0}
+.track li{display:flex;align-items:center;gap:40px;padding-right:40px;font-size:clamp(1.4rem,3vw,2rem);font-weight:600;letter-spacing:-.03em;white-space:nowrap}
+.track li::after{content:"";width:12px;height:12px;border-radius:3px;background:var(--cobalt);transform:rotate(45deg)}
+.track li:nth-child(3n+2)::after{background:var(--mint);border-radius:50%}
+.track li:nth-child(3n)::after{background:transparent;border:2px solid var(--ink);border-radius:50%}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section{padding:96px 0;border-top:1px solid var(--line)}
+section.first{border-top:0}
+@media (max-width:600px){section{padding:68px 0}}
+h2{font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.04;letter-spacing:-.04em;font-weight:700;margin:0 0 14px}
+.intro{color:var(--muted);max-width:36em;margin:0 0 52px;font-size:1.15rem;font-weight:350}
 
 /* timeline */
-.timeline{display:grid;gap:0}
+.timeline{position:relative}
 .entry{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;padding:32px 0;border-top:1px solid var(--line)}
 .entry:first-child{border-top:0;padding-top:0}
-.when{color:var(--muted);font-size:.95rem;font-variant-numeric:tabular-nums}
+.when{color:var(--muted);font-size:.98rem;font-variant-numeric:tabular-nums}
 .when b{display:block;color:var(--ink);font-weight:600}
-.entry h3{margin:0 0 2px;font-size:1.4rem;letter-spacing:-.015em}
+.entry h3{margin:0 0 2px;font-size:1.5rem;letter-spacing:-.025em;font-weight:650}
 .entry .where{margin:0 0 16px;color:var(--muted)}
-.entry ul{margin:0;padding-left:1.1em;max-width:40em}
-.entry li{margin-bottom:8px}
-.entry li::marker{color:var(--cobalt)}
+.entry ul{margin:0;padding:0;list-style:none;max-width:40em}
+.entry li{position:relative;padding-left:22px;margin-bottom:10px}
+.entry li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:2px;background:var(--cobalt);transform:rotate(45deg) scale(0);transition:transform .5s cubic-bezier(.3,1.6,.6,1)}
+.entry.in li::before{transform:rotate(45deg) scale(1)}
+.entry.in li:nth-child(2)::before{transition-delay:.1s}.entry.in li:nth-child(3)::before{transition-delay:.2s}
+.entry.in li:nth-child(4)::before{transition-delay:.3s}.entry.in li:nth-child(5)::before{transition-delay:.4s}
 @media (max-width:700px){.entry{grid-template-columns:1fr;gap:8px}}
 
 /* projects */
 .projects{display:grid;gap:20px}
-.project{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:40px;padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:24px}
-.project h3{margin:0 0 6px;font-size:clamp(1.6rem,3vw,2.1rem);letter-spacing:-.025em;line-height:1.1;font-variation-settings:"wdth" 88}
+.project{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:40px;padding:40px;background:var(--surface);
+  border:1px solid var(--line);border-radius:28px;overflow:hidden;isolation:isolate}
+.project::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),var(--cobalt-soft),transparent 70%)}
+.project:hover::before{opacity:1}
+.js .project.reveal.in{transition:opacity .8s var(--ease),transform .8s var(--ease),border-color .3s,box-shadow .4s}
+.project:hover{border-color:color-mix(in srgb,var(--cobalt) 40%,var(--line));box-shadow:0 30px 60px -40px rgba(31,95,209,.45)}
+.project h3{margin:0 0 6px;font-size:clamp(1.7rem,3.2vw,2.3rem);letter-spacing:-.035em;line-height:1.08;font-weight:700}
 .project .kind{margin:0 0 20px;color:var(--muted)}
+.mini{width:64px;height:64px;border-radius:18px;background:var(--cobalt-soft);display:grid;place-items:center;margin-bottom:24px;transition:transform .5s var(--ease)}
+.project:hover .mini{transform:rotate(-8deg) scale(1.08)}
+.mini svg{width:32px;height:32px;stroke:var(--cobalt)}
 .project ul{margin:0 0 24px;padding-left:1.1em}
 .project li{margin-bottom:8px}
 .project li::marker{color:var(--cobalt)}
 .stack{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
-.stack li{font-size:.85rem;padding:4px 12px;border-radius:999px;background:var(--cobalt-soft);color:var(--cobalt);font-weight:600;margin:0}
-.peek{font:inherit;font-weight:600;font-size:.95rem;color:var(--cobalt);background:none;border:0;padding:0;cursor:pointer;
-  text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px}
-@media (max-width:760px){.project{grid-template-columns:1fr;gap:4px;padding:24px}}
+.stack li{font-size:.88rem;padding:4px 12px;border-radius:999px;background:var(--cobalt-soft);color:var(--cobalt);font-weight:600;margin:0}
+.peek{font:inherit;font-weight:600;font-size:1rem;color:var(--cobalt);background:none;border:0;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.peek svg{width:18px;height:18px;transition:transform .35s var(--ease)}
+.peek:hover svg{transform:translateY(-4px)}
+@media (max-width:760px){.project{grid-template-columns:1fr;gap:4px;padding:26px}}
 
 /* skills */
 .skills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
-.skills h3{font-size:1rem;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.skills h3{font-size:1.05rem;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid var(--ink);font-weight:650}
 .skills ul{list-style:none;margin:0;padding:0}
-.skills li{padding:6px 0;border-bottom:1px solid var(--line)}
+.skills li{padding:7px 0;border-bottom:1px solid var(--line);transition:padding .3s var(--ease),color .3s}
+.skills li:hover{padding-left:8px;color:var(--cobalt)}
 @media (max-width:860px){.skills{grid-template-columns:1fr 1fr}}
 @media (max-width:340px){.skills{grid-template-columns:1fr}}
 
 /* recognition */
 .recog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
-.recog h3{margin:0 0 8px;font-size:1.2rem;letter-spacing:-.01em}
+.recog h3{margin:0 0 8px;font-size:1.25rem;letter-spacing:-.02em;font-weight:650}
 .recog p{margin:0;color:var(--muted)}
 @media (max-width:760px){.recog{grid-template-columns:1fr;gap:24px}}
 
 /* contact */
-.contact .big{display:inline-block;font-size:clamp(1.5rem,5.4vw,3.6rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;
-  font-variation-settings:"wdth" 80;text-decoration:none;border-bottom:3px solid var(--cobalt);overflow-wrap:anywhere;margin:8px 0 32px}
-.contact .big:hover{color:var(--cobalt)}
+.contact{position:relative;overflow:hidden}
+.contact .big{display:inline-block;font-size:clamp(1.55rem,5.6vw,3.8rem);font-weight:700;letter-spacing:-.045em;line-height:1.15;
+  text-decoration:none;overflow-wrap:anywhere;margin:8px 0 36px;
+  background:linear-gradient(var(--cobalt),var(--cobalt)) left bottom/100% 3px no-repeat,linear-gradient(var(--cobalt),var(--cobalt)) left bottom/0% 100% no-repeat;
+  transition:background-size .5s var(--ease),color .4s;padding:0 4px}
+.contact .big:hover{background-size:100% 3px,100% 100%;color:var(--paper)}
 .links{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.toast{font-size:.9rem;color:var(--mint);font-weight:600;min-width:7em}
-footer{padding:32px 0 48px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+.toast{font-size:.95rem;color:var(--mint);font-weight:600;min-width:7em}
+footer{padding:32px 0 48px;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important}
+  .track{animation:none;flex-wrap:wrap;width:auto}
+  .track ul+ul{display:none}
 }
 </style>
 </head>
@@ -237,7 +336,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 <nav class="nav" id="nav" aria-label="Main">
   <div class="wrap">
-    <a class="brand" href="#top">Rahul M</a>
+    <a class="brand" href="#top"><i aria-hidden="true"></i>Rahul M</a>
     <ul>
       <li><a href="#work">Work</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -245,15 +344,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
+  <div class="progress" id="progress"></div>
 </nav>
 
 <main id="top">
-  <header class="hero">
+  <header class="hero" id="hero">
+    <div class="backdrop" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div></div>
     <div class="wrap">
       <div>
-        <h1>Mobile apps for taxis, factories and front desks.</h1>
-        <p class="lede">I'm <strong>Rahul M</strong>, a full stack mobile developer at Adhoc Softwares in Coimbatore. Since 2021 I've led a team building Flutter and React Native apps, along with the web panels and Node.js services behind them.</p>
-        <div class="actions">
+        <div class="open fade" style="--d:.1s"><span class="dot" aria-hidden="true"></span>Open to new roles</div>
+        <h1 class="split" id="headline">Mobile apps for taxis, factories and front desks.</h1>
+        <p class="lede fade" style="--d:.9s">I'm <strong>Rahul M</strong>, a full stack mobile developer at Adhoc Softwares in Coimbatore. Since 2021 I've led a team building Flutter and React Native apps, along with the web panels and Node.js services behind them.</p>
+        <div class="actions fade" style="--d:1.05s">
           <a class="btn" href="mailto:rahulmanoharan0@gmail.com">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
             Email me
@@ -261,110 +363,138 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
           <a class="btn ghost" href="https://github.com/rahul14rz" target="_blank" rel="noopener">GitHub</a>
           <a class="btn ghost" href="https://linkedin.com/in/rahul14rz" target="_blank" rel="noopener">LinkedIn</a>
         </div>
+        <div class="facts fade" style="--d:1.2s">
+          <div><b><span data-count="5">0</span>+ years</b>building apps</div>
+          <div><b>Team lead</b>at Adhoc Softwares</div>
+          <div><b>IEEE</b>published research</div>
+        </div>
       </div>
 
       <div class="device" id="device">
-        <div class="phone" role="img" aria-label="Phone showing a sketch of the selected project">
-          <div class="screen">
-            <div class="notch"></div>
+        <div class="stage">
+          <div class="tilt" id="tilt">
+            <span class="chip c1" data-depth="40"><i></i>Flutter</span>
+            <span class="chip c2" data-depth="-30"><i></i>React Native</span>
+            <span class="chip c3" data-depth="25"><i></i>Node.js</span>
+            <div class="phone" role="img" aria-label="Phone showing a sketch of the selected project">
+              <div class="screen">
+                <div class="notch"></div>
 
-            <!-- Book My Ride -->
-            <div class="app ride on" data-app="ride">
-              <div class="status"><span class="clock">9:41</span><span>5G</span></div>
-              <div class="map">
-                <svg viewBox="0 0 276 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                  <path d="M0 250 C60 230 90 280 150 268 S240 240 276 255 V400 H0Z" fill="var(--water)"/>
-                  <rect x="168" y="70" width="70" height="56" rx="10" fill="var(--park)"/>
-                  <g stroke="var(--road)" stroke-width="10" stroke-linecap="round" fill="none">
-                    <path d="M-10 110 H290"/><path d="M-10 190 H290"/>
-                    <path d="M60 -10 V240"/><path d="M140 -10 V260"/><path d="M220 40 V245"/>
-                    <path d="M20 320 L250 300" stroke-width="7"/>
-                  </g>
-                  <path class="route" d="M60 75 V110 H140 V190 H220 V230"/>
-                  <circle cx="60" cy="75" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="4"/>
-                  <g transform="translate(220 230)">
-                    <path d="M0 0 C-10 -14 -14 -20 -14 -27 a14 14 0 0 1 28 0 c0 7 -4 13 -14 27Z" fill="var(--ink)"/>
-                    <circle cy="-27" r="5" fill="var(--surface)"/>
-                  </g>
-                </svg>
-              </div>
-              <div class="sheet">
-                <div class="grab"></div>
-                <h4>Driver arriving in 4 min</h4>
-                <p class="sub">Drottninggatan to Stockholm Central</p>
-                <div class="driver">
-                  <div class="avatar">EL</div>
-                  <div><b>Erik L.</b><span>Volvo XC60, white</span></div>
-                  <div class="plate">ABC 123</div>
+                <div class="app ride on" data-app="ride">
+                  <div class="status"><span class="clock">9:41</span><span>5G</span></div>
+                  <div class="map">
+                    <svg viewBox="0 0 276 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <path d="M0 250 C60 230 90 280 150 268 S240 240 276 255 V400 H0Z" fill="var(--water)"/>
+                      <rect x="168" y="70" width="70" height="56" rx="10" fill="var(--park)"/>
+                      <g stroke="var(--road)" stroke-width="10" stroke-linecap="round" fill="none">
+                        <path d="M-10 110 H290"/><path d="M-10 190 H290"/>
+                        <path d="M60 -10 V240"/><path d="M140 -10 V260"/><path d="M220 40 V245"/>
+                        <path d="M20 320 L250 300" stroke-width="7"/>
+                      </g>
+                      <path class="route" d="M60 75 V110 H140 V190 H220 V230"/>
+                      <circle cx="60" cy="75" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="4"/>
+                      <g class="car" id="car">
+                        <rect x="-9" y="-5.5" width="18" height="11" rx="3.5" fill="var(--cobalt)" stroke="var(--surface)" stroke-width="2"/>
+                        <rect x="2" y="-3.5" width="4" height="7" rx="1" fill="var(--surface)" opacity=".8"/>
+                        <animateMotion id="carMove" dur="1.8s" begin="indefinite" fill="freeze" rotate="auto" path="M60 75 V110 H140 V190 H198"/>
+                      </g>
+                      <g transform="translate(220 230)">
+                        <g class="pin">
+                          <path d="M0 0 C-10 -14 -14 -20 -14 -27 a14 14 0 0 1 28 0 c0 7 -4 13 -14 27Z" fill="var(--ink)"/>
+                          <circle cy="-27" r="5" fill="var(--surface)"/>
+                        </g>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="sheet">
+                    <div class="grab"></div>
+                    <h4>Driver arriving in 4 min</h4>
+                    <p class="sub">Drottninggatan to Stockholm Central</p>
+                    <div class="driver">
+                      <div class="avatar">EL</div>
+                      <div><b>Erik L.</b><span>Volvo XC60, white</span></div>
+                      <div class="plate">ABC 123</div>
+                    </div>
+                    <span class="pill">Share trip</span>
+                  </div>
                 </div>
-                <span class="pill">Share trip</span>
-              </div>
-            </div>
 
-            <!-- BusinessI ERP -->
-            <div class="app erp" data-app="erp">
-              <div class="status"><span class="clock">9:41</span><span>5G</span></div>
-              <div class="top"><h4 id="greet">Good morning</h4><span>Main plant</span></div>
-              <div class="tiles">
-                <div class="tile"><small>CRM</small><b>18</b><i>open leads</i></div>
-                <div class="tile"><small>HRMS</small><b>142</b><i>checked in</i></div>
-                <div class="tile"><small>Inventory</small><b>6</b><i>low stock items</i></div>
-                <div class="tile"><small>Manufacturing</small><b>3</b><i>jobs running</i></div>
-              </div>
-              <div class="chart">
-                <small>Units produced this week</small>
-                <div class="bars"><span style="--h:46%"></span><span style="--h:62%"></span><span style="--h:55%"></span><span style="--h:78%"></span><span style="--h:70%"></span><span style="--h:40%"></span><span style="--h:88%"></span></div>
-                <div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
-              </div>
-              <div class="list">
-                <div><span>PO-2207 approved</span><em>2m</em></div>
-                <div><span>Leave request, Priya</span><em>18m</em></div>
-              </div>
-            </div>
+                <div class="app erp" data-app="erp">
+                  <div class="status"><span class="clock">9:41</span><span>5G</span></div>
+                  <div class="top"><h4 id="greet">Good morning</h4><span>Main plant</span></div>
+                  <div class="tiles">
+                    <div class="tile"><small>CRM</small><b data-to="18">18</b><i>open leads</i></div>
+                    <div class="tile"><small>HRMS</small><b data-to="142">142</b><i>checked in</i></div>
+                    <div class="tile"><small>Inventory</small><b data-to="6">6</b><i>low stock items</i></div>
+                    <div class="tile"><small>Manufacturing</small><b data-to="3">3</b><i>jobs running</i></div>
+                  </div>
+                  <div class="chart">
+                    <small>Units produced this week</small>
+                    <div class="bars"><span style="--h:46%;--i:0"></span><span style="--h:62%;--i:1"></span><span style="--h:55%;--i:2"></span><span style="--h:78%;--i:3"></span><span style="--h:70%;--i:4"></span><span style="--h:40%;--i:5"></span><span style="--h:88%;--i:6"></span></div>
+                    <div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+                  </div>
+                  <div class="list">
+                    <div><span>PO-2207 approved</span><em>2m</em></div>
+                    <div><span>Leave request, Priya</span><em>18m</em></div>
+                  </div>
+                </div>
 
-            <!-- Face attendance -->
-            <div class="app face" data-app="face">
-              <div class="status"><span class="clock">9:41</span><span>5G</span></div>
-              <h4>Check in</h4>
-              <p class="hint" id="faceHint">Hold still and blink once</p>
-              <div class="scan">
-                <svg viewBox="0 0 190 236" aria-hidden="true">
-                  <ellipse class="ring" cx="95" cy="118" rx="88" ry="110"/>
-                  <ellipse class="ring-live" cx="95" cy="118" rx="88" ry="110"/>
-                  <g fill="none" stroke="#5A6878" stroke-width="3" stroke-linecap="round">
-                    <ellipse cx="95" cy="110" rx="46" ry="58"/>
-                    <path d="M76 100 h8 M106 100 h8"/>
-                    <path d="M95 106 v16 l-5 3"/>
-                    <path d="M82 140 q13 9 26 0"/>
-                    <path d="M40 236 q10 -50 55 -58 q45 8 55 58"/>
-                  </g>
-                </svg>
-                <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#0E141C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
-              </div>
-              <div class="record">
-                <div><b>Marked present</b><span>Liveness confirmed</span></div>
-                <b class="clock">9:41</b>
+                <div class="app face" data-app="face">
+                  <div class="status"><span class="clock">9:41</span><span>5G</span></div>
+                  <h4>Check in</h4>
+                  <p class="hint" id="faceHint">Hold still and blink once</p>
+                  <div class="scan">
+                    <svg viewBox="0 0 190 236" aria-hidden="true">
+                      <defs>
+                        <clipPath id="oval"><ellipse cx="95" cy="118" rx="86" ry="108"/></clipPath>
+                        <linearGradient id="sw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E9CF2" stop-opacity="0"/><stop offset="1" stop-color="#6E9CF2" stop-opacity=".5"/></linearGradient>
+                      </defs>
+                      <ellipse class="ring" cx="95" cy="118" rx="88" ry="110"/>
+                      <g clip-path="url(#oval)"><rect class="sweep" x="0" y="2" width="190" height="32" fill="url(#sw)"/></g>
+                      <ellipse class="ring-live" cx="95" cy="118" rx="88" ry="110"/>
+                      <g fill="none" stroke="#5A6878" stroke-width="3" stroke-linecap="round">
+                        <ellipse cx="95" cy="110" rx="46" ry="58"/>
+                        <path d="M76 100 h8 M106 100 h8"/>
+                        <path d="M95 106 v16 l-5 3"/>
+                        <path d="M82 140 q13 9 26 0"/>
+                        <path d="M40 236 q10 -50 55 -58 q45 8 55 58"/>
+                      </g>
+                    </svg>
+                    <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#0E141C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
+                  </div>
+                  <div class="record">
+                    <div><b>Marked present</b><span>Liveness confirmed</span></div>
+                    <b class="clock">9:41</b>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="switch" role="group" aria-label="Choose a project to show on the phone">
+        <div class="switch auto fade" style="--d:1.3s" id="switch" role="group" aria-label="Choose a project to show on the phone">
           <button type="button" data-show="ride" aria-pressed="true">Taxi</button>
           <button type="button" data-show="erp" aria-pressed="false">ERP</button>
           <button type="button" data-show="face" aria-pressed="false">Attendance</button>
         </div>
-        <p id="caption">Book My Ride, a taxi app for Sweden</p>
+        <p id="caption" class="fade" style="--d:1.4s" aria-live="polite">Book My Ride, a taxi app for Sweden</p>
       </div>
     </div>
   </header>
 
-  <section id="work">
+  <div class="marquee" aria-label="Technologies I use">
+    <div class="track">
+      <ul><li>Flutter</li><li>React Native</li><li>Dart</li><li>Kotlin</li><li>React</li><li>Next.js</li><li>Node.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Firebase</li><li>AWS</li></ul>
+      <ul aria-hidden="true"><li>Flutter</li><li>React Native</li><li>Dart</li><li>Kotlin</li><li>React</li><li>Next.js</li><li>Node.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Firebase</li><li>AWS</li></ul>
+    </div>
+  </div>
+
+  <section id="work" class="first">
     <div class="wrap">
-      <h2>Work and education</h2>
-      <p class="intro">Five years shipping client apps at one company, on top of an IT degree and research work.</p>
+      <h2 class="split">Work and education</h2>
+      <p class="intro reveal">Five years shipping client apps at one company, on top of an IT degree and research work.</p>
       <div class="timeline">
-        <article class="entry">
+        <article class="entry reveal">
           <div class="when"><b>Apr 2021 to now</b>Saravanampatti, Coimbatore</div>
           <div>
             <h3>Full Stack Mobile Developer</h3>
@@ -378,7 +508,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
             </ul>
           </div>
         </article>
-        <article class="entry">
+        <article class="entry reveal">
           <div class="when"><b>2014 to 2018</b>Coimbatore</div>
           <div>
             <h3>B.Tech, Information Technology</h3>
@@ -395,11 +525,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
   <section id="projects">
     <div class="wrap">
-      <h2>Selected projects</h2>
-      <p class="intro">Three apps from the last few years. Each one has a small sketch on the phone above.</p>
+      <h2 class="split">Selected projects</h2>
+      <p class="intro reveal">Three apps from the last few years. Each one plays on the phone at the top of the page.</p>
       <div class="projects">
-        <article class="project">
+        <article class="project reveal">
           <div>
+            <div class="mini" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17l1.5-5.5A2 2 0 0 1 9.4 10h5.2a2 2 0 0 1 1.9 1.5L18 17"/><circle cx="8" cy="17.5" r="1.5"/><circle cx="16" cy="17.5" r="1.5"/><path d="M10 7h4"/></svg></div>
             <h3>Book My Ride</h3>
             <p class="kind">Taxi booking app for Sweden</p>
           </div>
@@ -410,11 +541,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
               <li>Tuning the Next.js backend for speed and scale.</li>
             </ul>
             <ul class="stack" aria-label="Tech used"><li>React Native</li><li>Next.js</li><li>Node.js</li><li>React</li></ul>
-            <button class="peek" type="button" data-show="ride">See it on the phone</button>
+            <button class="peek" type="button" data-show="ride">See it on the phone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </div>
         </article>
-        <article class="project">
+        <article class="project reveal">
           <div>
+            <div class="mini" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="4" rx="1.5"/><rect x="13" y="10" width="7" height="10" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/></svg></div>
             <h3>BusinessI ERP</h3>
             <p class="kind">ERP software for growing companies</p>
           </div>
@@ -425,11 +557,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
               <li>Improved app performance while working in agile teams across design, backend and QA.</li>
             </ul>
             <ul class="stack" aria-label="Tech used"><li>Flutter</li><li>React</li><li>Node.js</li><li>PostgreSQL</li></ul>
-            <button class="peek" type="button" data-show="erp">See it on the phone</button>
+            <button class="peek" type="button" data-show="erp">See it on the phone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </div>
         </article>
-        <article class="project">
+        <article class="project reveal">
           <div>
+            <div class="mini" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><circle cx="12" cy="10" r="3"/><path d="M7.5 17a5 5 0 0 1 9 0"/></svg></div>
             <h3>BusinessI Face Attendance</h3>
             <p class="kind">Face recognition check-in</p>
           </div>
@@ -440,7 +573,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
               <li>Cut errors in attendance records compared with manual tracking.</li>
             </ul>
             <ul class="stack" aria-label="Tech used"><li>Flutter</li><li>Dart</li><li>Liveness detection</li><li>REST APIs</li></ul>
-            <button class="peek" type="button" data-show="face">See it on the phone</button>
+            <button class="peek" type="button" data-show="face">See it on the phone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </div>
         </article>
       </div>
@@ -449,35 +582,35 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
   <section id="skills">
     <div class="wrap">
-      <h2>What I work with</h2>
-      <p class="intro">Mobile first, with enough web and backend to ship a whole product.</p>
+      <h2 class="split">What I work with</h2>
+      <p class="intro reveal">Mobile first, with enough web and backend to ship a whole product.</p>
       <div class="skills">
-        <div><h3>Mobile</h3><ul><li>Flutter</li><li>React Native</li><li>Dart</li><li>Kotlin</li><li>Java</li></ul></div>
-        <div><h3>Web</h3><ul><li>React</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li><li>HTML and CSS</li></ul></div>
-        <div><h3>Backend and data</h3><ul><li>Node.js</li><li>RESTful APIs</li><li>PostgreSQL</li><li>MySQL</li><li>Firebase</li></ul></div>
-        <div><h3>Tools and practice</h3><ul><li>AWS</li><li>Git</li><li>Jira</li><li>UI and UX design</li><li>Mentoring</li></ul></div>
+        <div class="reveal"><h3>Mobile</h3><ul><li>Flutter</li><li>React Native</li><li>Dart</li><li>Kotlin</li><li>Java</li></ul></div>
+        <div class="reveal"><h3>Web</h3><ul><li>React</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li><li>HTML and CSS</li></ul></div>
+        <div class="reveal"><h3>Backend and data</h3><ul><li>Node.js</li><li>RESTful APIs</li><li>PostgreSQL</li><li>MySQL</li><li>Firebase</li></ul></div>
+        <div class="reveal"><h3>Tools and practice</h3><ul><li>AWS</li><li>Git</li><li>Jira</li><li>UI and UX design</li><li>Mentoring</li></ul></div>
       </div>
     </div>
   </section>
 
   <section id="recognition">
     <div class="wrap">
-      <h2>Research and certificates</h2>
-      <p class="intro">Outside client work.</p>
+      <h2 class="split">Research and certificates</h2>
+      <p class="intro reveal">Outside client work.</p>
       <div class="recog">
-        <div><h3>Published research</h3><p>Papers on image steganography and autonomous navigation, published in IEEE and international journals.</p></div>
-        <div><h3>NPTEL courses</h3><p>Mobile Computing and Internetwork Security, certified by IIT Madras and IIT Kharagpur.</p></div>
-        <div><h3>Cambridge BEC Preliminary</h3><p>Business English Certificate with merit, at European level B1, from the University of Cambridge.</p></div>
+        <div class="reveal"><h3>Published research</h3><p>Papers on image steganography and autonomous navigation, published in IEEE and international journals.</p></div>
+        <div class="reveal"><h3>NPTEL courses</h3><p>Mobile Computing and Internetwork Security, certified by IIT Madras and IIT Kharagpur.</p></div>
+        <div class="reveal"><h3>Cambridge BEC Preliminary</h3><p>Business English Certificate with merit, at European level B1, from the University of Cambridge.</p></div>
       </div>
     </div>
   </section>
 
   <section id="contact" class="contact">
     <div class="wrap">
-      <h2>Have an app in mind?</h2>
-      <p class="intro">I'm happy to talk about mobile projects, team roles or freelance work.</p>
-      <a class="big" href="mailto:rahulmanoharan0@gmail.com">rahulmanoharan0@gmail.com</a>
-      <div class="links">
+      <h2 class="split">Have an app in mind?</h2>
+      <p class="intro reveal">I'm happy to talk about mobile roles, team lead positions or freelance work.</p>
+      <a class="big reveal" href="mailto:rahulmanoharan0@gmail.com">rahulmanoharan0@gmail.com</a>
+      <div class="links reveal">
         <button class="btn" type="button" id="copy">Copy email</button>
         <a class="btn ghost" href="https://github.com/rahul14rz" target="_blank" rel="noopener">GitHub</a>
         <a class="btn ghost" href="https://linkedin.com/in/rahul14rz" target="_blank" rel="noopener">LinkedIn</a>
@@ -494,52 +627,163 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 <script>
 (function(){
-  var captions={ride:"Book My Ride, a taxi app for Sweden",erp:"BusinessI ERP, the home screen",face:"BusinessI Face Attendance, checking in"};
-  var apps=document.querySelectorAll('.app');
-  var buttons=document.querySelectorAll('.switch button');
-  var caption=document.getElementById('caption');
-  var faceApp=document.querySelector('.face');
-  var hint=document.getElementById('faceHint');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var timer;
+  var fine=window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 
-  function now(){var d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
-  document.querySelectorAll('.clock').forEach(function(c){c.textContent=now();});
-  document.getElementById('year').textContent=new Date().getFullYear();
-  var hr=new Date().getHours();document.getElementById('greet').textContent=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
+  /* clocks, greeting, year */
+  var d=new Date();
+  var clock=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  $$('.clock').forEach(function(c){c.textContent=clock});
+  $('#year').textContent=d.getFullYear();
+  var hr=d.getHours();$('#greet').textContent=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
 
-  function show(id){
-    clearTimeout(timer);
-    apps.forEach(function(a){
-      var on=a.dataset.app===id;
-      a.classList.remove('on','done');
-      if(on){void a.offsetWidth;a.classList.add('on');}
-    });
-    buttons.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.show===id?'true':'false');});
-    caption.textContent=captions[id];
-    if(id==='face'){
-      hint.textContent='Hold still and blink once';
-      timer=setTimeout(function(){faceApp.classList.add('done');hint.textContent='Welcome back, you are checked in';},reduce?0:2700);
-    }
-  }
-  buttons.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.show);});});
-  document.querySelectorAll('.peek').forEach(function(b){
-    b.addEventListener('click',function(){
-      show(b.dataset.show);
-      document.getElementById('device').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
-    });
+  /* split headings into masked words */
+  $$('.split').forEach(function(el){
+    var base=el.id==='headline'?.25:0;
+    var words=el.textContent.trim().split(/\s+/);
+    el.setAttribute('aria-label',el.textContent.trim());
+    el.innerHTML=words.map(function(w,i){
+      return '<span class="w" aria-hidden="true"><span style="--d:'+(base+i*.07).toFixed(2)+'s">'+w+'</span></span>';
+    }).join(' ');
   });
 
-  var nav=document.getElementById('nav');
-  addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>8);},{passive:true});
+  /* count up */
+  function countUp(el,to,dur){
+    if(reduce){el.textContent=to;return}
+    var t0=performance.now();
+    (function step(t){
+      var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(to*e);
+      if(p<1)requestAnimationFrame(step);
+    })(t0);
+  }
 
-  var toast=document.getElementById('toast');
-  document.getElementById('copy').addEventListener('click',function(){
+  /* hero entrance */
+  var hero=$('#hero');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    hero.classList.add('ready');$('#headline').classList.add('in');
+    setTimeout(function(){$$('[data-count]').forEach(function(el){countUp(el,+el.dataset.count,1200)})},reduce?0:1300);
+  })});
+
+  /* phone */
+  var order=['ride','erp','face'];
+  var durations={ride:5200,erp:4800,face:5600};
+  var captions={ride:"Book My Ride, a taxi app for Sweden",erp:"BusinessI ERP, the home screen",face:"BusinessI Face Attendance, checking in"};
+  var apps=$$('.app'),buttons=$$('.switch button'),sw=$('#switch'),caption=$('#caption');
+  var faceApp=$('.face'),hint=$('#faceHint'),car=$('#car'),carMove=$('#carMove');
+  var current='ride',auto=!reduce,cycle,faceT,carT,visible=true;
+
+  function play(id){
+    if(id==='ride'){
+      car.style.opacity=0;
+      carT=setTimeout(function(){car.style.opacity=1;try{carMove.beginElement()}catch(e){}},reduce?0:200);
+    }
+    if(id==='erp'){$$('.tile b').forEach(function(b){countUp(b,+b.dataset.to,900)})}
+    if(id==='face'){
+      hint.textContent='Hold still and blink once';
+      faceT=setTimeout(function(){faceApp.classList.add('done');hint.textContent='Welcome back, you are checked in'},reduce?0:2700);
+    }
+  }
+  function show(id){
+    clearTimeout(faceT);clearTimeout(carT);clearTimeout(cycle);
+    current=id;
+    apps.forEach(function(a){
+      var on=a.dataset.app===id;
+      a.classList.remove('done','out');
+      if(on){a.classList.remove('on');void a.offsetWidth;a.classList.add('on')}
+      else if(a.classList.contains('on')){a.classList.remove('on');a.classList.add('out')}
+    });
+    buttons.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.show===id?'true':'false')});
+    sw.style.setProperty('--dur',durations[id]+'ms');
+    caption.textContent=captions[id];
+    play(id);
+    schedule();
+  }
+  function schedule(){
+    clearTimeout(cycle);
+    if(!auto||!visible)return;
+    cycle=setTimeout(function(){show(order[(order.indexOf(current)+1)%order.length])},durations[current]);
+  }
+  function stopAuto(){auto=false;sw.classList.remove('auto');clearTimeout(cycle)}
+  if(!auto)sw.classList.remove('auto');
+  sw.style.setProperty('--dur',durations.ride+'ms');
+  buttons.forEach(function(b){b.addEventListener('click',function(){stopAuto();show(b.dataset.show)})});
+  $$('.peek').forEach(function(b){b.addEventListener('click',function(){
+    stopAuto();show(b.dataset.show);
+    $('#device').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+  })});
+  setTimeout(function(){play('ride');schedule()},reduce?0:1500);
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      var v=es[0].isIntersecting;
+      if(v&&!visible){visible=true;if(auto)show(current)}
+      else if(!v){visible=false;clearTimeout(cycle)}
+    },{threshold:.2}).observe($('#device'));
+  }
+
+  /* tilt and parallax chips */
+  var tilt=$('#tilt'),chips=$$('.chip');
+  if(fine&&!reduce){
+    hero.addEventListener('pointermove',function(e){
+      var r=hero.getBoundingClientRect();
+      var x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      tilt.style.transform='rotateY('+(x*14).toFixed(2)+'deg) rotateX('+(-y*10).toFixed(2)+'deg)';
+      chips.forEach(function(c){var k=+c.dataset.depth;c.style.transform='translate('+(x*k).toFixed(1)+'px,'+(y*k).toFixed(1)+'px)'});
+    });
+    hero.addEventListener('pointerleave',function(){tilt.style.transform='';chips.forEach(function(c){c.style.transform=''})});
+
+    $$('.btn').forEach(function(b){
+      b.addEventListener('pointermove',function(e){
+        var r=b.getBoundingClientRect();
+        b.style.transform='translate('+((e.clientX-r.left-r.width/2)*.18).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*.25).toFixed(1)+'px)';
+      });
+      b.addEventListener('pointerleave',function(){b.style.transform=''});
+    });
+    $$('.project').forEach(function(p){
+      p.addEventListener('pointermove',function(e){
+        var r=p.getBoundingClientRect();
+        p.style.setProperty('--mx',(e.clientX-r.left)+'px');p.style.setProperty('--my',(e.clientY-r.top)+'px');
+      });
+    });
+  }
+
+  /* scroll reveal */
+  var groups=new Map();
+  $$('.reveal').forEach(function(el){
+    var p=el.parentElement,i=groups.get(p)||0;groups.set(p,i+1);
+    el.style.setProperty('--d',(i*.09).toFixed(2)+'s');
+  });
+  var targets=$$('.reveal, section .split');
+  if('IntersectionObserver' in window&&!reduce){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+    },{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+    targets.forEach(function(t){io.observe(t)});
+  }else{targets.forEach(function(t){t.classList.add('in')})}
+
+  /* nav: border, progress bar, current section */
+  var nav=$('#nav'),bar=$('#progress'),links=$$('.nav ul a');
+  var secs=links.map(function(a){return $(a.getAttribute('href'))});
+  function onScroll(){
+    var y=scrollY,h=document.documentElement.scrollHeight-innerHeight;
+    nav.classList.toggle('scrolled',y>8);
+    bar.style.transform='scaleX('+(h>0?y/h:0).toFixed(4)+')';
+    var idx=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<innerHeight*.4)idx=i});
+    links.forEach(function(a,i){a.classList.toggle('here',i===idx)});
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* copy email */
+  var toast=$('#toast');
+  $('#copy').addEventListener('click',function(){
     var email='rahulmanoharan0@gmail.com';
-    function done(msg){toast.textContent=msg;setTimeout(function(){toast.textContent='';},2500);}
+    function done(m){toast.textContent=m;setTimeout(function(){toast.textContent=''},2500)}
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(email).then(function(){done('Email copied');},function(){done('Select the address above to copy it');});
-    }else{done('Select the address above to copy it');}
+      navigator.clipboard.writeText(email).then(function(){done('Email copied')},function(){done('Select the address above to copy it')});
+    }else{done('Select the address above to copy it')}
   });
 })();
 </script>
